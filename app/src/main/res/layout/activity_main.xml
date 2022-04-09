@@ -8,13 +8,6 @@
     android:orientation="vertical"
     android:background="#FF8BC34A">
 
-    <TextView
-        android:id = "@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFEB3B"
-        android:text = "@string/label" />
-
     <EditText
         android:id = "@+id/txtUserName"
         android:layout_width="match_parent"
