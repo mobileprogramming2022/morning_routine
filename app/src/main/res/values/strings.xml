@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">morningroutin_layout</string>
-    <string name="plan">일정</string>
-    <string name="reward">보상</string>
-    <string name="graph">통계</string>
-    <string name="option">옵션</string>
-</resources>
