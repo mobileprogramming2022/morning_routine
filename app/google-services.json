@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "913506821003",
+    "firebase_url": "https://morning-routine-db-test-default-rtdb.firebaseio.com",
+    "project_id": "morning-routine-db-test",
+    "storage_bucket": "morning-routine-db-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913506821003:android:f964ee8f22c0d715c4058e",
+        "android_client_info": {
+          "package_name": "com.gachon.morningroutin_layout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913506821003-7shioqoeeeuo9a55hmakr3vsvaditi2i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeVXWkK3dsDjt6P8JC39875FJIxOfom_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913506821003-7shioqoeeeuo9a55hmakr3vsvaditi2i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
