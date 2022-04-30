@@ -23,8 +23,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"/>
+        <activity android:name=".AlarmActivity"></activity>
         <activity
-            android:name=".AlarmMainActivity"
+            android:name=".exampleAlarmMain"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +34,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmExample"></receiver>
+        <receiver android:name=".AlarmReceiver"></receiver>
     </application>
 
 </manifest>
