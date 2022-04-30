@@ -10,17 +10,20 @@
     android:background="@drawable/dawn">
 
 
-    <!-- table layout for village item placement-->
+    <!-- ===============================table layout for village item placement=============================== -->
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1">
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_weight="0.7">
 
         <TableRow
             android:layout_weight = "1"
             >
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView1_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -28,6 +31,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile02"
                 android:id="@+id/imageView1_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -35,6 +39,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView1_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -42,6 +47,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile02"
                 android:id="@+id/imageView1_4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -49,6 +55,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView1_5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -60,6 +67,7 @@
             android:layout_weight = "1">
 
             <ImageView
+                android:background="@drawable/tile02"
                 android:id="@+id/imageView2_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -67,6 +75,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView2_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -74,6 +83,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView2_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -81,6 +91,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView2_4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -88,6 +99,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView2_5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -99,6 +111,7 @@
             android:layout_weight = "1">
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView3_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -106,6 +119,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView3_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -113,6 +127,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile02"
                 android:id="@+id/imageView3_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -120,6 +135,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView3_4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -127,6 +143,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView3_5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -138,6 +155,7 @@
             android:layout_weight = "1">
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView4_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -145,6 +163,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile02"
                 android:id="@+id/imageView4_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -152,6 +171,8 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile02"
+
                 android:id="@+id/imageView4_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -159,6 +180,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView4_4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -166,6 +188,7 @@
                 android:src="@drawable/plus" />
 
             <ImageView
+                android:background="@drawable/tile01"
                 android:id="@+id/imageView4_5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -175,10 +198,11 @@
     </TableLayout>
 
 
-    <!-- layout for inventory list-->
+    <!-- ==================================layout for inventory list==========================================-->
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="0.5">
 
         <TableRow
@@ -194,7 +218,7 @@
 
             <ImageView
                 android:id="@+id/item02"
-                android:src="@drawable/tree01"
+                android:src="@drawable/tree02"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -202,7 +226,7 @@
 
             <ImageView
                 android:id="@+id/item03"
-                android:src="@drawable/tree01"
+                android:src="@drawable/tree03"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -210,7 +234,7 @@
 
             <ImageView
                 android:id="@+id/item04"
-                android:src="@drawable/tree01"
+                android:src="@drawable/tree04"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -218,7 +242,7 @@
 
             <ImageView
                 android:id="@+id/item05"
-                android:src="@drawable/tree01"
+                android:src="@drawable/tree05"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -281,7 +305,7 @@
             >
             <ImageView
                 android:id="@+id/item06"
-                android:src="@drawable/tree01"
+                android:src="@drawable/tree06"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -289,7 +313,7 @@
 
             <ImageView
                 android:id="@+id/item07"
-                android:src="@drawable/tree01"
+                android:src="@drawable/tree07"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -297,7 +321,7 @@
 
             <ImageView
                 android:id="@+id/item08"
-                android:src="@drawable/tree01"
+                android:src="@drawable/tree08"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -305,7 +329,7 @@
 
             <ImageView
                 android:id="@+id/item09"
-                android:src="@drawable/tree01"
+                android:src="@drawable/tree09"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -357,7 +381,7 @@
 
 
 
-    <!-- layout for bottom menu-->
+    <!-- ==================================layout for bottom menu================================== -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"

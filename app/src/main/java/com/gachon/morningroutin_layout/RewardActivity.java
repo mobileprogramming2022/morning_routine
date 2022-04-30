@@ -55,33 +55,39 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
 
 
 
-        databaseRef.child("user").child("user_inventory").child("tree01").addChildEventListener(new ChildEventListener() {
+        DatabaseReference inventoryRef = firebaseDatabase.getReference();
+        inventoryRef.child("inventory").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                getInventory inventory = snapshot.getValue(getInventory.class);
 
-            }
+                tree01 = inventory.getTree01();
+                tree02 = inventory.getTree02();
+                tree03 = inventory.getTree03();
+                tree04 = inventory.getTree04();
+                tree05 = inventory.getTree05();
+                tree06 = inventory.getTree06();
+                tree07 = inventory.getTree07();
+                tree08 = inventory.getTree08();
+                tree09 = inventory.getTree09();
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                tree01 = (int)snapshot.getValue(Integer.class);
-                inv01.setText(tree01);
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                inv01.setText(String.valueOf(tree01));
+                inv02.setText(String.valueOf(tree02));
+                inv03.setText(String.valueOf(tree03));
+                inv04.setText(String.valueOf(tree04));
+                inv05.setText(String.valueOf(tree05));
+                inv06.setText(String.valueOf(tree06));
+                inv07.setText(String.valueOf(tree07));
+                inv08.setText(String.valueOf(tree08));
+                inv09.setText(String.valueOf(tree09));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Error connecting DB", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Failed to connect DB", Toast.LENGTH_SHORT).show();
             }
         });
+
         ImageView item[]=new ImageView[9];
         //set image for drag
         for (int i=1;i<=9; i++) {
