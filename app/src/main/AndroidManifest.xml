@@ -12,18 +12,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morningroutin_layout">
         <activity
+            android:name=".TodoInflationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StudyInflationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExerciseInflationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AlarmSetActivity"
+            android:exported="false" />
+        <activity
             android:name=".GraphActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".OptionActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".RewardActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
-        <activity android:name=".AlarmActivity"></activity>
+            android:exported="true" />
+
+
+        <activity android:name=".AlarmActivity" />
         <activity
             android:name=".exampleAlarmMain"
             android:exported="true">
@@ -34,7 +48,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmReceiver"></receiver>
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>
