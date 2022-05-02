@@ -18,6 +18,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ImageButton addAlarm = findViewById(R.id.imageView);
+        addAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AlarmSetActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         //image button
         ImageButton graph = findViewById(R.id.Graph);
         graph.setOnClickListener(new View.OnClickListener() {
