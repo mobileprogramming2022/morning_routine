@@ -48,14 +48,18 @@
 
 
     <TextView
+        android:textAlignment="center"
         android:id="@+id/archiveWalk"
-        android:layout_width="141dp"
-        android:layout_height="64dp"
+        android:layout_width="306dp"
+        android:layout_height="58dp"
         android:text=""
         android:textColor="@color/white"
-        android:textSize="25sp"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="397dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.608"
         tools:ignore="MissingConstraints" />
 
     <Button

@@ -9,7 +9,7 @@
 
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/exerciseWalkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/exerciseTimeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -32,7 +32,7 @@
 
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/exerciseTodoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/walkCount"
+        android:id="@+id/userTextInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="목표 걸음 수 입력"

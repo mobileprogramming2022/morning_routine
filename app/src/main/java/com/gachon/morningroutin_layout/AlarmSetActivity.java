@@ -1,18 +1,13 @@
 package com.gachon.morningroutin_layout;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +45,7 @@ public class AlarmSetActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (SELECTED_SCREEN == EXERCISE_SCREEN) {
-                    EditText et = (EditText) findViewById(R.id.walkCount);
+                    EditText et = (EditText) findViewById(R.id.userTextInput);
 
                     boolean isInput = false;
                     if (et.getText().toString().length() != 0) {
@@ -60,7 +55,7 @@ public class AlarmSetActivity extends AppCompatActivity {
                     if (!isInput) {
                         Toast.makeText(AlarmSetActivity.this, "목표 걸음 수를 입력하세요!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Intent intent = new Intent(getApplicationContext(), WalkFlowActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), WalkFlowActivity.class).putExtra("WALK_ARCHIVE_COUNT", et.getText().toString());
                         startActivity(intent);
                     }
                 } else if (SELECTED_SCREEN == STUDY_SCREEN) {

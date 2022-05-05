@@ -40,15 +40,12 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
         stepCountView = findViewById(R.id.stepCountView);
         resetButton = findViewById(R.id.resetButton);
 
-        EditText archiveWalkEnter = (EditText) findViewById(R.id.walkCount);
-        /*
-        String counts = archiveWalkEnter.getText().toString();
-        String showMsg = "목표 걸음 수" + counts + "보";
 
+        Intent getWalkCounter = getIntent();
+        String walkArchive = getWalkCounter.getStringExtra("WALK_ARCHIVE_COUNT");
         TextView archiveWalkCount = findViewById(R.id.archiveWalk);
-        archiveWalkCount.setText(showMsg);
+        archiveWalkCount.setText("목표 걸음 수: " + walkArchive);
 
-         */
 
 
         // 활동 퍼미션 체크
