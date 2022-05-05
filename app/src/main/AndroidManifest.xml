@@ -23,9 +23,6 @@
             android:name=".StudyInflationActivity"
             android:exported="false" />
         <activity
-            android:name=".ExerciseInflationActivity"
-            android:exported="false" />
-        <activity
             android:name=".AlarmSetActivity"
             android:exported="false" />
         <activity

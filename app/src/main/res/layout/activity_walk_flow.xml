@@ -11,25 +11,24 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_marginBottom="30dp"
-        android:text="만보기 (SKELETON)"
-        android:textSize="30sp"
+        android:text="하루 걷기"
         android:textColor="@color/white"
+        android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/stepCountTag"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.037" />
 
     <TextView
         android:id="@+id/stepCountTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="116dp"
         android:text="걸음수 :"
-        android:textSize="25sp"
         android:textColor="@color/white"
+        android:textSize="25sp"
         app:layout_constraintEnd_toStartOf="@+id/stepCountView"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -48,18 +47,19 @@
 
 
     <TextView
-        android:textAlignment="center"
         android:id="@+id/archiveWalk"
         android:layout_width="306dp"
         android:layout_height="58dp"
         android:text=""
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.608"
+        app:layout_constraintVertical_bias="0.344"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -68,8 +68,38 @@
         android:layout_height="wrap_content"
         android:text="Reset"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/stepCountView"
-        app:layout_constraintStart_toStartOf="@+id/stepCountTag"
-        app:layout_constraintTop_toBottomOf="@+id/stepCountTag" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.14" />
+
+
+    <TextView
+        android:id="@+id/progress_walk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="진행도: 0%"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+
+    <ImageView
+        android:id="@+id/okIndicate"
+        android:layout_width="189dp"
+        android:layout_height="160dp"
+        android:src="@drawable/tree01"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

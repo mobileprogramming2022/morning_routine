@@ -18,6 +18,7 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +26,12 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
 
     SensorManager sensorManager;
     Sensor stepCountSensor;
-    TextView stepCountView;
+    TextView stepCountView, progressPercentView;
+    ImageView successImage;
     Button resetButton;
 
     // 현재 걸음 수
-    int currentSteps = 0;
+    int currentSteps = 0, walk_int = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -39,12 +41,17 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
 
         stepCountView = findViewById(R.id.stepCountView);
         resetButton = findViewById(R.id.resetButton);
+        progressPercentView = findViewById(R.id.progress_walk);
+        successImage = findViewById(R.id.okIndicate);
+        successImage.setVisibility(View.INVISIBLE);
 
 
         Intent getWalkCounter = getIntent();
         String walkArchive = getWalkCounter.getStringExtra("WALK_ARCHIVE_COUNT");
         TextView archiveWalkCount = findViewById(R.id.archiveWalk);
         archiveWalkCount.setText("목표 걸음 수: " + walkArchive);
+
+        walk_int = Integer.parseInt(walkArchive);
 
 
 
@@ -75,7 +82,8 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
                 // 현재 걸음수 초기화
                 currentSteps = 0;
                 stepCountView.setText(String.valueOf(currentSteps));
-
+                progressPercentView.setText("진행도: 0.00%");
+                successImage.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -109,6 +117,11 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
                 // 센서 이벤트가 발생할때 마다 걸음수 증가
                 currentSteps++;
                 stepCountView.setText(String.valueOf(currentSteps));
+                String progress = String.format("%.02f", (float)currentSteps / walk_int * 100);
+                if (progress.compareTo("100.00") == 0) {
+                    successImage.setVisibility(View.VISIBLE);
+                }
+                progressPercentView.setText("진행도: " + progress + "%");
             }
 
         }

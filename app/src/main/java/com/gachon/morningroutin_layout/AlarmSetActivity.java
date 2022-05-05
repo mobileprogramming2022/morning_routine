@@ -24,8 +24,8 @@ public class AlarmSetActivity extends AppCompatActivity {
 
     int mYear, mMonth, mDay, mHour, mMinute;
     int SELECTED_SCREEN = 0; // init state
-    final int EXERCISE_SCREEN = 1;
-    final int STUDY_SCREEN = 2;
+    final int WALK_SCREEN = 1;
+    final int TIME_SCREEN = 2;
     final int TODO_SCREEN = 3;
 
     @Override
@@ -36,17 +36,72 @@ public class AlarmSetActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ConstraintLayout container = findViewById(R.id.layout_select_inflation_screen);
 
+        /*--------------------------------------
+        For Inflation
+         */
+        ImageButton studyScrInflation = findViewById(R.id.showStudyScreen);
+        studyScrInflation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StudyInflationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton todoScrInflation = findViewById(R.id.showListScreen);
+        todoScrInflation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(AlarmSetActivity.this, "Todo activity 로 이동", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         /*-------------------------------------
-        만보기 화면 전환
+        Button click indicator
+         */
+        Button exerciseWalkButton = findViewById(R.id.exerciseWalkButton);
+        Button exerciseTimeButton = findViewById(R.id.exerciseTimeButton);
+        Button exerciseTodoButton = findViewById(R.id.exerciseTodoButton);
+        exerciseWalkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SELECTED_SCREEN = WALK_SCREEN;
+                EditText et = (EditText) findViewById(R.id.userTextInput);
+                et.setHint("목표 걸음 수 입력");
+            }
+        });
+
+        exerciseTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SELECTED_SCREEN = TIME_SCREEN;
+                EditText et = (EditText) findViewById(R.id.userTextInput);
+                et.setHint("목표 시간 입력");
+            }
+        });
+
+        exerciseTodoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SELECTED_SCREEN = TODO_SCREEN;
+                EditText et = (EditText) findViewById(R.id.userTextInput);
+                et.setHint("하단의 확인 버튼을 눌러주세요");
+            }
+        });
+
+        /*-------------------------------------
+        화면 전환
          */
         Button SAVE = findViewById(R.id.SaveBtn);
         SAVE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (SELECTED_SCREEN == EXERCISE_SCREEN) {
+                if (SELECTED_SCREEN == 0) {
+                    Toast.makeText(AlarmSetActivity.this, "걷기 / 시간 / Todo 중에서 선택하세요!", Toast.LENGTH_SHORT).show();
+                } else if (SELECTED_SCREEN == WALK_SCREEN) {
+                    // 만보기로 보낸다.
                     EditText et = (EditText) findViewById(R.id.userTextInput);
-
                     boolean isInput = false;
                     if (et.getText().toString().length() != 0) {
                         isInput = true;
@@ -58,11 +113,12 @@ public class AlarmSetActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), WalkFlowActivity.class).putExtra("WALK_ARCHIVE_COUNT", et.getText().toString());
                         startActivity(intent);
                     }
-                } else if (SELECTED_SCREEN == STUDY_SCREEN) {
-                    // Do something
-                } else if (SELECTED_SCREEN == TODO_SCREEN) {
-                    // Do Something
+                } else if (SELECTED_SCREEN == TIME_SCREEN) {
+                    Toast.makeText(AlarmSetActivity.this, "시간 설정 화면으로 이동합니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AlarmSetActivity.this, "To do 설정 화면으로 이동합니다", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -95,36 +151,6 @@ public class AlarmSetActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new TimePickerDialog(AlarmSetActivity.this, sleepTimeSetListener, mHour, mMinute, false).show();
-            }
-        });
-
-        /*--------------------------------------
-        For Inflation
-         */
-        ImageButton studyScrInflation = findViewById(R.id.showStudyScreen);
-        studyScrInflation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SELECTED_SCREEN = STUDY_SCREEN;
-                inflater.inflate(R.layout.activity_study_inflation, container, true);
-            }
-        });
-
-        ImageButton walkScrInflation = findViewById(R.id.showActivityScreen);
-        walkScrInflation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SELECTED_SCREEN = EXERCISE_SCREEN;
-                inflater.inflate(R.layout.activity_exercise_inflation, container, true);
-            }
-        });
-
-        ImageButton todoScrInflation = findViewById(R.id.showListScreen);
-        todoScrInflation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SELECTED_SCREEN = TODO_SCREEN;
-                inflater.inflate(R.layout.activity_todo_inflation, container, true);
             }
         });
 
