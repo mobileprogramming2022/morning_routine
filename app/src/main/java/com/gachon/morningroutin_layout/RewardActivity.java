@@ -211,8 +211,8 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 Bitmap bitmap = bitmapDrawable.getBitmap();
                 setting.setImageBitmap(bitmap);
                 //should be code change for count --
-                ViewGroup owner = (ViewGroup) vw.getParent();
-                owner.removeView(vw); //remove the dragged view
+                //ViewGroup owner = (ViewGroup) vw.getParent();
+                //owner.removeView(vw); //remove the dragged view
                 // Returns true. DragEvent.getResult() will return true.
                 return true;
 
