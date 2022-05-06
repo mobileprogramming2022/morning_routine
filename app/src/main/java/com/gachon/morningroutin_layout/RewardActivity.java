@@ -35,66 +35,35 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
     // get instances for firebase database
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseRef = firebaseDatabase.getReference();
-    int tree01, tree02, tree03, tree04, tree05, tree06, tree07, tree08, tree09;
-    TextView inv01, inv02, inv03, inv04, inv05, inv06, inv07, inv08, inv09;
+    int tree[] = new int [9];
+    TextView inv[] = new TextView[9];
+    ImageView item[]=new ImageView[9];
+    final int itemID=2131296528;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reward);
 
-        inv01 = (TextView)findViewById(R.id.inventory01);
-        inv02 = (TextView)findViewById(R.id.inventory02);
-        inv03 = (TextView)findViewById(R.id.inventory03);
-        inv04 = (TextView)findViewById(R.id.inventory04);
-        inv05 = (TextView)findViewById(R.id.inventory05);
-        inv06 = (TextView)findViewById(R.id.inventory06);
-        inv07 = (TextView)findViewById(R.id.inventory07);
-        inv08 = (TextView)findViewById(R.id.inventory08);
-        inv09 = (TextView)findViewById(R.id.inventory09);
+        inv[0] = (TextView)findViewById(R.id.inventory01);
+        inv[1] = (TextView)findViewById(R.id.inventory02);
+        inv[2] = (TextView)findViewById(R.id.inventory03);
+        inv[3] = (TextView)findViewById(R.id.inventory04);
+        inv[4] = (TextView)findViewById(R.id.inventory05);
+        inv[5] = (TextView)findViewById(R.id.inventory06);
+        inv[6] = (TextView)findViewById(R.id.inventory07);
+        inv[7] = (TextView)findViewById(R.id.inventory08);
+        inv[8] = (TextView)findViewById(R.id.inventory09);
 
-
-
-        DatabaseReference inventoryRef = firebaseDatabase.getReference();
-        inventoryRef.child("inventory").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                getInventory inventory = snapshot.getValue(getInventory.class);
-
-                tree01 = inventory.getTree01();
-                tree02 = inventory.getTree02();
-                tree03 = inventory.getTree03();
-                tree04 = inventory.getTree04();
-                tree05 = inventory.getTree05();
-                tree06 = inventory.getTree06();
-                tree07 = inventory.getTree07();
-                tree08 = inventory.getTree08();
-                tree09 = inventory.getTree09();
-
-                inv01.setText(String.valueOf(tree01));
-                inv02.setText(String.valueOf(tree02));
-                inv03.setText(String.valueOf(tree03));
-                inv04.setText(String.valueOf(tree04));
-                inv05.setText(String.valueOf(tree05));
-                inv06.setText(String.valueOf(tree06));
-                inv07.setText(String.valueOf(tree07));
-                inv08.setText(String.valueOf(tree08));
-                inv09.setText(String.valueOf(tree09));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Failed to connect DB", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        ImageView item[]=new ImageView[9];
         //set image for drag
-        for (int i=1;i<=9; i++) {
-            int k = getResources().getIdentifier("item0" + i,"id", getPackageName());
-            item[i-1] = (ImageView) findViewById(k);
-            item[i-1].setTag("ANDROID ICON");
-            item[i-1].setOnLongClickListener(this);
+        for (int i=0;i<=8; i++) {
+            int k = getResources().getIdentifier("item0" + (i+1),"id", getPackageName());
+            item[i] = (ImageView) findViewById(k);
+            item[i].setTag("ANDROID ICON");
+            if (inv[i].getText().equals('0')==false) {
+                item[i].setOnLongClickListener(this);
+            }
         }
 
         //set table for switch
@@ -104,6 +73,42 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 findViewById(k).setOnDragListener(this);
             }
         }
+
+        DatabaseReference inventoryRef = firebaseDatabase.getReference();
+        inventoryRef.child("inventory").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                getInventory inventory = snapshot.getValue(getInventory.class);
+
+                tree[0] = inventory.getTree01();
+                tree[1] = inventory.getTree02();
+                tree[2] = inventory.getTree03();
+                tree[3] = inventory.getTree04();
+                tree[4] = inventory.getTree05();
+                tree[5] = inventory.getTree06();
+                tree[6] = inventory.getTree07();
+                tree[7] = inventory.getTree08();
+                tree[8] = inventory.getTree09();
+
+                for (int i=0; i<9; i++){
+                    inv[i].setText(String.valueOf(tree[i]));
+                }
+                for (int i=0; i<9; i++) {
+                    if (tree[i] == 0) {
+                        item[i].setAlpha(50);
+                        item[i].setEnabled(false);
+                    } else {
+                        item[i].setAlpha(255);
+                        item[i].setEnabled(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Failed to connect DB", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // bottom menu
         //image button
@@ -166,6 +171,8 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
 
     @Override
     public boolean onLongClick(View view) {
+
+
         // Create a new ClipData.Item from the ImageView object's tag
         ClipData.Item item = new ClipData.Item((CharSequence) view.getTag());
         // Create a new ClipData using the tag as a label, the plain text MIME type, and
@@ -214,6 +221,129 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 //ViewGroup owner = (ViewGroup) vw.getParent();
                 //owner.removeView(vw); //remove the dragged view
                 // Returns true. DragEvent.getResult() will return true.
+                // when item is used, update database
+                DatabaseReference itemRef = firebaseDatabase.getReference();
+                switch (resource.getId()){
+                    case itemID:
+                        itemRef.child("inventory").child("tree01").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tree1 = (int)snapshot.getValue(Integer.class);
+                                tree1 -= 1;
+                                itemRef.child("inventory").child("tree01").setValue(tree1);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        break;
+                    case itemID + 1:
+                        itemRef.child("inventory").child("tree02").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tree2 = (int)snapshot.getValue(Integer.class);
+                                tree2 -= 1;
+                                itemRef.child("inventory").child("tree02").setValue(tree2);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        break;
+                    case itemID + 2:
+                        itemRef.child("inventory").child("tree03").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tree3 = (int)snapshot.getValue(Integer.class);
+                                tree3 -= 1;
+                                itemRef.child("inventory").child("tree03").setValue(tree3);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        break;
+                    case itemID + 3:
+                        itemRef.child("inventory").child("tree04").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tree4 = (int)snapshot.getValue(Integer.class);
+                                tree4 -= 1;
+                                itemRef.child("inventory").child("tree04").setValue(tree4);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        break;
+                    case itemID + 4:
+                        itemRef.child("inventory").child("tree05").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tree5 = (int)snapshot.getValue(Integer.class);
+                                tree5 -= 1;
+                                itemRef.child("inventory").child("tree05").setValue(tree5);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        break;
+                    case itemID + 5:
+                        itemRef.child("inventory").child("tree06").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tree6 = (int)snapshot.getValue(Integer.class);
+                                tree6 -= 1;
+                                itemRef.child("inventory").child("tree06").setValue(tree6);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        break;
+                    case itemID + 6:
+                        itemRef.child("inventory").child("tree07").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tree7 = (int)snapshot.getValue(Integer.class);
+                                tree7 -= 1;
+                                itemRef.child("inventory").child("tree07").setValue(tree7);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        break;
+                    case itemID + 7:
+                        itemRef.child("inventory").child("tree08").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tree8 = (int)snapshot.getValue(Integer.class);
+                                tree8 -= 1;
+                                itemRef.child("inventory").child("tree08").setValue(tree8);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        break;
+                    case itemID + 8:
+                        itemRef.child("inventory").child("tree09").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tree9 = (int)snapshot.getValue(Integer.class);
+                                tree9 -= 1;
+                                itemRef.child("inventory").child("tree09").setValue(tree9);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        break;
+                    default:
+                        break;
+                }
                 return true;
 
             case DragEvent.ACTION_DRAG_ENDED:
