@@ -38,6 +38,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
     int tree[] = new int [9];
     TextView inv[] = new TextView[9];
     ImageView item[]=new ImageView[9];
+    ImageView tile[][]=new ImageView[4][5];
     final int itemID=2131296528;
 
 
@@ -67,10 +68,11 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
         }
 
         //set table for switch
-        for (int i=1;i<=4;i++) {
-            for (int j=1;j<=5;j++) {
-                int k = getResources().getIdentifier("imageView" + i + "_" + j, "id", getPackageName());
-                findViewById(k).setOnDragListener(this);
+        for (int i=0;i<4;i++) {
+            for (int j=0;j<5;j++) {
+                int k = getResources().getIdentifier("imageView" + (i+1) + "_" + (j+1), "id", getPackageName());
+                tile[i][j]=(ImageView) findViewById(k);
+                tile[i][j].setOnDragListener(this);
             }
         }
 
@@ -79,7 +81,6 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 getInventory inventory = snapshot.getValue(getInventory.class);
-
                 tree[0] = inventory.getTree01();
                 tree[1] = inventory.getTree02();
                 tree[2] = inventory.getTree03();
