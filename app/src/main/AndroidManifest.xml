@@ -36,14 +36,6 @@
             android:exported="true" />
 
         <activity
-            android:name=".exampleAlarmMain"
-            android:exported="true" />
-
-        <activity
-            android:name=".AlarmActivity"
-            android:exported="false"/>
-
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -53,7 +45,6 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>

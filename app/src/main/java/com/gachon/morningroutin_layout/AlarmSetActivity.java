@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -223,7 +225,6 @@ public class AlarmSetActivity extends AppCompatActivity {
             //사용자가 입력한 값을 가져온뒤
             mHour = hourOfDay;
             mMinute = minute;
-
             //텍스트뷰의 값을 업데이트함
 
             UpdateNow("WAKE");
