@@ -112,7 +112,7 @@ public class AlarmSetActivity extends AppCompatActivity {
                     if (!isInput) {
                         Toast.makeText(AlarmSetActivity.this, "목표 걸음 수를 입력하세요!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Intent intent = new Intent(getApplicationContext(), WalkFlowActivity.class).putExtra("WALK_ARCHIVE_COUNT", et.getText().toString());
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class).putExtra("WALK_ARCHIVE_COUNT", "1");
                         startActivity(intent);
                     }
                 } else if (SELECTED_SCREEN == TIME_SCREEN) {
@@ -225,6 +225,27 @@ public class AlarmSetActivity extends AppCompatActivity {
             //사용자가 입력한 값을 가져온뒤
             mHour = hourOfDay;
             mMinute = minute;
+
+            Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+            intent.putExtra(AlarmClock.EXTRA_HOUR,mHour);
+            intent.putExtra(AlarmClock.EXTRA_MINUTES,mMinute);
+            intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Good Morning");
+
+            ArrayList<Integer> alarmDays = new ArrayList<Integer>();
+            alarmDays.add(Calendar.MONDAY);
+            alarmDays.add(Calendar.TUESDAY);
+            alarmDays.add(Calendar.WEDNESDAY);
+            alarmDays.add(Calendar.THURSDAY);
+            alarmDays.add(Calendar.FRIDAY);
+            alarmDays.add(Calendar.SATURDAY);
+            alarmDays.add(Calendar.SUNDAY);
+            intent.putExtra(AlarmClock.EXTRA_DAYS,alarmDays);
+
+            intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
+
+            if(mHour <= 24 && mMinute <= 60) {
+                startActivity(intent);
+            }
             //텍스트뷰의 값을 업데이트함
 
             UpdateNow("WAKE");
@@ -240,6 +261,26 @@ public class AlarmSetActivity extends AppCompatActivity {
             mHour = hourOfDay;
             mMinute = minute;
 
+            Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
+            intent.putExtra(AlarmClock.EXTRA_HOUR,mHour);
+            intent.putExtra(AlarmClock.EXTRA_MINUTES,mMinute);
+            intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Good Night");
+
+            ArrayList<Integer> alarmDays = new ArrayList<Integer>();
+            alarmDays.add(Calendar.MONDAY);
+            alarmDays.add(Calendar.TUESDAY);
+            alarmDays.add(Calendar.WEDNESDAY);
+            alarmDays.add(Calendar.THURSDAY);
+            alarmDays.add(Calendar.FRIDAY);
+            alarmDays.add(Calendar.SATURDAY);
+            alarmDays.add(Calendar.SUNDAY);
+            intent.putExtra(AlarmClock.EXTRA_DAYS,alarmDays);
+
+            intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
+
+            if(mHour <= 24 && mMinute <= 60) {
+                startActivity(intent);
+            }
             //텍스트뷰의 값을 업데이트함
 
             UpdateNow("SLEEP");
@@ -248,6 +289,7 @@ public class AlarmSetActivity extends AppCompatActivity {
 
     @SuppressLint("DefaultLocale")
     void UpdateNow(String id) {
+
         if (id.compareTo("WAKE") == 0) {
             Button wakeTimeView = findViewById(R.id.wakeTimeView);
             wakeTimeView.setText(String.format("%02d:%02d", mHour, mMinute));
