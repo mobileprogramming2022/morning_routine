@@ -46,6 +46,7 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
         successImage.setVisibility(View.INVISIBLE);
 
 
+        // 당장은 INTENT 로 받지만 DB 연동 예정
         Intent getWalkCounter = getIntent();
         String walkArchive = getWalkCounter.getStringExtra("WALK_ARCHIVE_COUNT");
         TextView archiveWalkCount = findViewById(R.id.archiveWalk);

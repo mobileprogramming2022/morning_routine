@@ -18,11 +18,17 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.StringTokenizer;
 
 public class AlarmSetActivity extends AppCompatActivity {
+
+    private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     int mYear, mMonth, mDay, mHour, mMinute;
     int SELECTED_SCREEN = 0; // init state
@@ -30,13 +36,33 @@ public class AlarmSetActivity extends AppCompatActivity {
     final int TIME_SCREEN = 2;
     final int TODO_SCREEN = 3;
 
+    String wakeTime = "07:00";
+    String sleepTime = "12:00";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_set);
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ConstraintLayout container = findViewById(R.id.layout_select_inflation_screen);
+
+        Button sleepTimeBtn = findViewById(R.id.sleepTimeView);
+        Button wakeTimeBtn = findViewById(R.id.wakeTimeView);
+        findViewById(R.id.exerciseTodoText).setVisibility(View.INVISIBLE);
+
+
+        // Intent part
+        Intent timeIntent = getIntent();
+        String savedTime = timeIntent.getStringExtra("TIME");
+        if (savedTime != null) {
+            StringTokenizer st = new StringTokenizer(savedTime, " ");
+            String SLEEP_TIME_FROM = st.nextToken();
+            String WAKE_TIME_FROM = st.nextToken();
+
+            sleepTimeBtn.setText(SLEEP_TIME_FROM);
+            wakeTimeBtn.setText(WAKE_TIME_FROM);
+            sleepTime = SLEEP_TIME_FROM;
+            wakeTime = WAKE_TIME_FROM;
+        }
 
         /*--------------------------------------
         For Inflation
@@ -45,7 +71,7 @@ public class AlarmSetActivity extends AppCompatActivity {
         studyScrInflation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), StudyInflationActivity.class);
+                Intent intent = new Intent(getApplicationContext(), StudyInflationActivity.class).putExtra("TIME", sleepTime + " " + wakeTime);
                 startActivity(intent);
             }
         });
@@ -54,7 +80,8 @@ public class AlarmSetActivity extends AppCompatActivity {
         todoScrInflation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AlarmSetActivity.this, "Todo activity 로 이동", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), TodoInflationActivity.class).putExtra("TIME", sleepTime + " " + wakeTime);
+                startActivity(intent);
             }
         });
 
@@ -69,6 +96,9 @@ public class AlarmSetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SELECTED_SCREEN = WALK_SCREEN;
                 EditText et = (EditText) findViewById(R.id.userTextInput);
+                et.setVisibility(View.VISIBLE);
+                TextView todoText = findViewById(R.id.exerciseTodoText);
+                todoText.setVisibility(View.INVISIBLE);
                 et.setHint("목표 걸음 수 입력");
             }
         });
@@ -78,7 +108,10 @@ public class AlarmSetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SELECTED_SCREEN = TIME_SCREEN;
                 EditText et = (EditText) findViewById(R.id.userTextInput);
-                et.setHint("목표 시간 입력");
+                et.setVisibility(View.VISIBLE);
+                TextView todoText = findViewById(R.id.exerciseTodoText);
+                todoText.setVisibility(View.INVISIBLE);
+                et.setHint("시간:분:초");
             }
         });
 
@@ -87,12 +120,16 @@ public class AlarmSetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SELECTED_SCREEN = TODO_SCREEN;
                 EditText et = (EditText) findViewById(R.id.userTextInput);
-                et.setHint("하단의 확인 버튼을 눌러주세요");
+                et.setVisibility(View.INVISIBLE);
+                TextView todoText = findViewById(R.id.exerciseTodoText);
+                todoText.setVisibility(View.VISIBLE);
             }
         });
 
         /*-------------------------------------
         화면 전환
+        DB 데이터 포멧
+        String TYPE, String USER_INPUT_DATA, String wakeTime, String sleepTime
          */
         Button SAVE = findViewById(R.id.SaveBtn);
         SAVE.setOnClickListener(new View.OnClickListener() {
@@ -112,11 +149,46 @@ public class AlarmSetActivity extends AppCompatActivity {
                     if (!isInput) {
                         Toast.makeText(AlarmSetActivity.this, "목표 걸음 수를 입력하세요!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class).putExtra("WALK_ARCHIVE_COUNT", "1");
+
+
+                        String TYPE = "WALK";
+                        String USER_INPUT_DATA = et.getText().toString();
+                        String wakeTimeDB = wakeTime;
+                        String sleepTimeDB = sleepTime;
+
+                        // DB 에 저장하고
+                        addPlanToFB(TYPE, USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
+
+                        // Main activity 띄운다.
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
+
                     }
                 } else if (SELECTED_SCREEN == TIME_SCREEN) {
-                    Toast.makeText(AlarmSetActivity.this, "시간 설정 화면으로 이동합니다.", Toast.LENGTH_SHORT).show();
+                    EditText et = (EditText) findViewById(R.id.userTextInput);
+                    boolean isInput = false;
+                    if (et.getText().toString().length() != 0) {
+                        isInput = true;
+                    }
+
+                    if (!isInput) {
+                        Toast.makeText(AlarmSetActivity.this, "목표 시간을 입력하세요!", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        String TYPE = "TIMER";
+                        String USER_INPUT_DATA = et.getText().toString();
+                        String wakeTimeDB = wakeTime;
+                        String sleepTimeDB = sleepTime;
+
+                        // DB 에 저장하고
+                        addPlanToFB(TYPE, USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
+
+                        // Main activity 띄운다.
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+
+
+                    }
                 } else {
                     Toast.makeText(AlarmSetActivity.this, "To do 설정 화면으로 이동합니다", Toast.LENGTH_SHORT).show();
                 }
@@ -125,13 +197,9 @@ public class AlarmSetActivity extends AppCompatActivity {
         });
 
 
-
         /*--------------------------------------
         For Calendar
          */
-
-        Button sleepTimeBtn = findViewById(R.id.sleepTimeView);
-        Button wakeTimeBtn = findViewById(R.id.wakeTimeView);
 
         Calendar cal = new GregorianCalendar();
         mYear = cal.get(Calendar.YEAR);
@@ -292,10 +360,18 @@ public class AlarmSetActivity extends AppCompatActivity {
 
         if (id.compareTo("WAKE") == 0) {
             Button wakeTimeView = findViewById(R.id.wakeTimeView);
-            wakeTimeView.setText(String.format("%02d:%02d", mHour, mMinute));
+            wakeTime = String.format("%02d:%02d", mHour, mMinute);
+            wakeTimeView.setText(wakeTime);
         } else {
             Button sleepTimeView = findViewById(R.id.sleepTimeView);
-            sleepTimeView.setText(String.format("%02d:%02d", mHour, mMinute));
+            sleepTime = String.format("%02d:%02d", mHour, mMinute);
+            sleepTimeView.setText(sleepTime);
         }
+    }
+
+    // 기기 내부 번호 식별값(기기 고유 ID 요청하여 TRUE 부분에 Key 대신 들어갈 예정)
+    public void addPlanToFB(String TYPE, String USER_INPUT_DATA, String wakeTime, String sleepTime) {
+        getTodayPlan todayPlan = new getTodayPlan(TYPE, USER_INPUT_DATA, wakeTime, sleepTime);
+        database.child("daily").child("12345").setValue(todayPlan);
     }
 }

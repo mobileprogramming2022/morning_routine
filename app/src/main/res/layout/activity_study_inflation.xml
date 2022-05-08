@@ -54,6 +54,7 @@
                 tools:ignore="MissingConstraints" />
 
             <Button
+                android:id="@+id/studySleepTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12:00"
@@ -67,6 +68,7 @@
                 app:layout_constraintVertical_bias="0.105" />
 
             <Button
+                android:id="@+id/studyWakeTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="07:00"
@@ -105,7 +107,7 @@
                 app:layout_constraintVertical_bias="0.297" />
 
             <ImageButton
-
+                android:id="@+id/fromStudygotoTodoImgButton"
                 android:layout_width="107dp"
                 android:layout_height="102dp"
                 android:text="To do"
@@ -129,6 +131,7 @@
 
 
                 <Button
+                    android:id="@+id/studyTimeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -139,6 +142,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
+                    android:id="@+id/studyTodoButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -149,6 +153,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
+                    android:id="@+id/studyUserInput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="어떤 목표를 세우시겠습니까?"
@@ -161,7 +166,23 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="MissingConstraints" />
 
+                <TextView
+                    android:id="@+id/studyTodoText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="실행 여부만 확인합니다. "
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.504"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.544"
+                    tools:ignore="MissingConstraints" />
+
                 <Button
+                    android:id="@+id/whiteNoise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="백색소음 On"
@@ -175,7 +196,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
-                android:id="@+id/SaveBtn"
+                android:id="@+id/studySaveBtn"
                 android:layout_width="311dp"
                 android:layout_height="46dp"
                 android:text="저장"
