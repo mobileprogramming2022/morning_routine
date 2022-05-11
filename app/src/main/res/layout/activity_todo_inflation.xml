@@ -15,14 +15,30 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
+        <Button
+            android:id="@+id/backToHomeButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="31dp"
+            android:text="취소"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayoutTodo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.089"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutTodo"
             android:layout_width="361dp"
             android:layout_height="569dp"
             android:background="@color/alarmSetBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.66">
 
 
             <TextView
@@ -57,7 +73,7 @@
                 android:id="@+id/todoSleepTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="12:00"
+                android:text="23:30"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -108,8 +124,8 @@
             <ImageButton
                 android:layout_width="107dp"
                 android:layout_height="102dp"
-                android:src="@drawable/foot"
                 android:scaleType="fitCenter"
+                android:src="@drawable/foot"
                 android:text="To do"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -166,109 +182,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/menuLabel"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/Plan"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:paddingTop="10dp"
-            android:src="@drawable/plan"
-            app:tint="@color/black" />
-
-        <ImageButton
-            android:id="@+id/Reward"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:paddingTop="10dp"
-            android:src="@drawable/medal"
-            app:tint="@color/nonClickButton" />
-
-        <ImageButton
-            android:id="@+id/Graph"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:paddingTop="10dp"
-            android:src="@drawable/graph"
-            app:tint="@color/nonClickButton" />
-
-        <ImageButton
-            android:id="@+id/Options"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:paddingTop="10dp"
-            android:src="@drawable/options"
-            app:tint="@color/nonClickButton" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/menuLabel"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textPlan"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/pl"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:text="@string/plan"
-            android:textColor="@color/black"
-            android:textSize="10dp" />
-
-        <TextView
-            android:id="@+id/textReward"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/pl"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:text="@string/reward"
-            android:textColor="@color/nonClickButton"
-            android:textSize="10dp" />
-
-        <TextView
-            android:id="@+id/textGraph"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/pl"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:text="@string/graph"
-            android:textColor="@color/nonClickButton"
-            android:textSize="10dp" />
-
-        <TextView
-            android:id="@+id/textOptions"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/pl"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:text="@string/option"
-            android:textColor="@color/nonClickButton"
-            android:textSize="10dp" />
-    </LinearLayout>
 </LinearLayout>

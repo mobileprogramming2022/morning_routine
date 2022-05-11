@@ -37,7 +37,7 @@ public class AlarmSetActivity extends AppCompatActivity {
     final int TODO_SCREEN = 3;
 
     String wakeTime = "07:00";
-    String sleepTime = "12:00";
+    String sleepTime = "23:30";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,13 +151,12 @@ public class AlarmSetActivity extends AppCompatActivity {
                     } else {
 
 
-                        String TYPE = "WALK";
                         String USER_INPUT_DATA = et.getText().toString();
                         String wakeTimeDB = wakeTime;
                         String sleepTimeDB = sleepTime;
 
                         // DB 에 저장하고
-                        addPlanToFB(TYPE, USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
+                        addPlanToFB("EXERCISE", "PEDOMETER", USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
 
                         // Main activity 띄운다.
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -175,13 +174,12 @@ public class AlarmSetActivity extends AppCompatActivity {
                         Toast.makeText(AlarmSetActivity.this, "목표 시간을 입력하세요!", Toast.LENGTH_SHORT).show();
                     } else {
 
-                        String TYPE = "TIMER";
                         String USER_INPUT_DATA = et.getText().toString();
                         String wakeTimeDB = wakeTime;
                         String sleepTimeDB = sleepTime;
 
                         // DB 에 저장하고
-                        addPlanToFB(TYPE, USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
+                        addPlanToFB("EXERCISE", "TIMER", USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
 
                         // Main activity 띄운다.
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -193,6 +191,14 @@ public class AlarmSetActivity extends AppCompatActivity {
                     Toast.makeText(AlarmSetActivity.this, "To do 설정 화면으로 이동합니다", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+        findViewById(R.id.backToHomeButton1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -225,63 +231,6 @@ public class AlarmSetActivity extends AppCompatActivity {
         });
 
 
-
-        //image button
-        ImageButton graph = findViewById(R.id.Graph);
-        graph.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-                startActivityForResult(intent, 101);
-                overridePendingTransition(0, 0);
-            }
-        });
-        ImageButton option = findViewById(R.id.Options);
-        option.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
-                startActivityForResult(intent, 101);
-                overridePendingTransition(0, 0);
-            }
-        });
-        ImageButton reward = findViewById(R.id.Reward);
-        reward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RewardActivity.class);
-                startActivityForResult(intent, 101);
-                overridePendingTransition(0, 0);
-            }
-        });
-        //text for button
-        TextView txtGraph = findViewById(R.id.textGraph);
-        txtGraph.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-                startActivityForResult(intent, 101);
-                overridePendingTransition(0, 0);
-            }
-        });
-        TextView txtOption = findViewById(R.id.textOptions);
-        txtOption.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
-                startActivityForResult(intent, 101);
-                overridePendingTransition(0, 0);
-            }
-        });
-        TextView txtReward = findViewById(R.id.textReward);
-        txtReward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RewardActivity.class);
-                startActivityForResult(intent, 101);
-                overridePendingTransition(0, 0);
-            }
-        });
     }
 
 
@@ -369,9 +318,8 @@ public class AlarmSetActivity extends AppCompatActivity {
         }
     }
 
-    // 기기 내부 번호 식별값(기기 고유 ID 요청하여 TRUE 부분에 Key 대신 들어갈 예정)
-    public void addPlanToFB(String TYPE, String USER_INPUT_DATA, String wakeTime, String sleepTime) {
-        getTodayPlan todayPlan = new getTodayPlan(TYPE, USER_INPUT_DATA, wakeTime, sleepTime);
+    public void addPlanToFB(String TYPE, String specific_type, String USER_INPUT_DATA, String wakeTime, String sleepTime) {
+        getTodayPlan todayPlan = new getTodayPlan(TYPE, specific_type, USER_INPUT_DATA, wakeTime, sleepTime);
         database.child("daily").child("12345").setValue(todayPlan);
     }
 }

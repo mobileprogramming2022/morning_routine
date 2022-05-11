@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.StringTokenizer;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.imageView).setVisibility(View.VISIBLE);
         findViewById(R.id.textView).setVisibility(View.VISIBLE);
 
-        TextView txtView = findViewById(R.id.textView);
         ImageButton addAlarm = findViewById(R.id.imageView);
 
         ImageButton graph = findViewById(R.id.Graph);
@@ -52,26 +53,52 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 getTodayPlan plan = snapshot.getValue(getTodayPlan.class);
-                if (plan == null) {
-                    // 할일 없음.
-                } else {
+                if (plan != null) {
                     Toast.makeText(MainActivity.this, "DB 에서 plan 을 가져왔습니다. ", Toast.LENGTH_SHORT).show();
 
                     findViewById(R.id.processView).setVisibility(View.VISIBLE);
                     findViewById(R.id.imageView).setVisibility(View.GONE);
                     findViewById(R.id.textView).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.startActivityImmediately).setVisibility(View.VISIBLE);
 
                     TextView myTYPE = findViewById(R.id.myArchive);
                     TextView myWakeTime = findViewById(R.id.myWakeTime);
                     TextView mySleepTime = findViewById(R.id.mySleepTime);
-                    TextView myInput = findViewById(R.id.myInput);
-
-                    TextView myOwnID = findViewById(R.id.showOwnID);
 
                     myTYPE.setText("나의 목표: " + plan.getType());
                     myWakeTime.setText("기상 시간: " + plan.getWakeTime());
                     mySleepTime.setText("취침 시간: " + plan.getSleepTime());
 
+
+
+                    String specific_type = plan.getSpecificType();
+                    String input_data = plan.getInput();
+                    if (specific_type.compareTo("PEDOMETER") == 0) {
+                        myTYPE.setText("오늘은 걷기 운동을 " + input_data + "보 해봐요!");
+                    } else if (specific_type.compareTo("TIMER") == 0) {
+                        // TYPE 이 STUDY 인지 EXERCISE 인지 확인
+                        String type_db = plan.getType();
+                        StringTokenizer st = new StringTokenizer(input_data, ":");
+                        String hour_db = st.nextToken();
+                        String minute_db = st.nextToken();
+                        String second_db = st.nextToken();
+
+                        if (type_db.compareTo("STUDY") == 0) {
+                            myTYPE.setText("오늘은 공부를 " );
+                        } else {
+                            myTYPE.setText("오늘은 운동을 " );
+                        }
+
+                        if (hour_db.compareTo("0") != 0) {
+                            myTYPE.setText(myTYPE.getText() + hour_db + "시간");
+                        } if (minute_db.compareTo("0") != 0) {
+                            myTYPE.setText(myTYPE.getText() + " " + minute_db + "분");
+                        } if  (second_db.compareTo("0") != 0) {
+                            myTYPE.setText(myTYPE.getText() + " " + second_db + "초");
+                        }
+
+                        myTYPE.setText(myTYPE.getText() + " 동안 해봐요!");
+                    }
 
                     findViewById(R.id.changePlanButton).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -89,7 +116,21 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
+
+                    findViewById(R.id.startActivityImmediately).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (plan.specificType.compareTo("PEDOMETER") == 0) {
+                                Intent intent = new Intent(getApplicationContext(), WalkFlowActivity.class);
+                                startActivity(intent);
+                            } else if (plan.specificType.compareTo("TIMER") == 0) {
+                                Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
                 }
+
             }
 
             @Override

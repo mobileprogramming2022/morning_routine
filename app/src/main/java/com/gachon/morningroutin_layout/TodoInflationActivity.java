@@ -32,7 +32,8 @@ public class TodoInflationActivity extends AppCompatActivity {
     final int TODO_SCREEN = 3;
 
     String wakeTime = "07:00";
-    String sleepTime = "12:00";
+    String sleepTime = "23:30";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,14 @@ public class TodoInflationActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(TodoInflationActivity.this, "Todo 화면으로 넘어갑니다.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        findViewById(R.id.backToHomeButton3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -163,9 +172,9 @@ public class TodoInflationActivity extends AppCompatActivity {
         }
     }
 
-    public void addPlanToFB(String TYPE, String USER_INPUT_DATA, String wakeTime, String sleepTime) {
-        getTodayPlan todayPlan = new getTodayPlan(TYPE, USER_INPUT_DATA, wakeTime, sleepTime);
-        database.child("daily").child("device").setValue(todayPlan);
+    public void addPlanToFB(String TYPE, String specific_type, String USER_INPUT_DATA, String wakeTime, String sleepTime) {
+        getTodayPlan todayPlan = new getTodayPlan(TYPE, specific_type, USER_INPUT_DATA, wakeTime, sleepTime);
+        database.child("daily").child("12345").setValue(todayPlan);
     }
 
 }

@@ -32,7 +32,8 @@ public class StudyInflationActivity extends AppCompatActivity {
     final int TODO_SCREEN = 3;
 
     String wakeTime = "07:00";
-    String sleepTime = "12:00";
+    String sleepTime = "23:30";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,6 @@ public class StudyInflationActivity extends AppCompatActivity {
         Button studyTodoButton = findViewById(R.id.studyTodoButton);
         EditText studyUserInput = findViewById(R.id.studyUserInput);
 
-        Button whiteNoise = findViewById(R.id.whiteNoise);
 
         findViewById(R.id.studyTodoText).setVisibility(View.INVISIBLE);
 
@@ -125,13 +125,12 @@ public class StudyInflationActivity extends AppCompatActivity {
                         Toast.makeText(StudyInflationActivity.this, "목표 시간을 입력하세요!", Toast.LENGTH_SHORT).show();
                     } else {
 
-                        String TYPE = "TIMER";
                         String USER_INPUT_DATA = et.getText().toString();
                         String wakeTimeDB = wakeTime;
                         String sleepTimeDB = sleepTime;
 
                         // DB 에 저장하고
-                        addPlanToFB(TYPE, USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
+                        addPlanToFB("STUDY", "TIMER", USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
 
                         // Main activity 띄운다.
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -144,6 +143,14 @@ public class StudyInflationActivity extends AppCompatActivity {
                     Toast.makeText(StudyInflationActivity.this, "To do 설정 화면으로 이동합니다", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+        findViewById(R.id.backToHomeButton2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -218,9 +225,9 @@ public class StudyInflationActivity extends AppCompatActivity {
         }
     }
 
-    public void addPlanToFB(String TYPE, String USER_INPUT_DATA, String wakeTime, String sleepTime) {
-        getTodayPlan todayPlan = new getTodayPlan(TYPE, USER_INPUT_DATA, wakeTime, sleepTime);
-        database.child("daily").child("device").setValue(todayPlan);
+    public void addPlanToFB(String TYPE, String specific_type, String USER_INPUT_DATA, String wakeTime, String sleepTime) {
+        getTodayPlan todayPlan = new getTodayPlan(TYPE, specific_type, USER_INPUT_DATA, wakeTime, sleepTime);
+        database.child("daily").child("12345").setValue(todayPlan);
     }
 
 

@@ -62,18 +62,30 @@
         app:layout_constraintVertical_bias="0.344"
         tools:ignore="MissingConstraints" />
 
+
+
     <Button
-        android:id="@+id/resetButton"
+        android:id="@+id/walkCancel_BUTTON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset"
+        android:text="포기하기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.14" />
+        app:layout_constraintVertical_bias="0.607" />
 
+    <Button
+        android:id="@+id/walkSuccess_BUTTON"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:text="성공"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.607" />
 
     <TextView
         android:id="@+id/progress_walk"
@@ -90,8 +102,26 @@
         app:layout_constraintVertical_bias="0.499" />
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <ImageView
-        android:id="@+id/okIndicate"
+        android:visibility="invisible"
+        android:id="@+id/pedometer_tree01"
         android:layout_width="189dp"
         android:layout_height="160dp"
         android:src="@drawable/tree01"
@@ -100,6 +130,104 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.851" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/pedometer_tree02"
+        android:layout_width="189dp"
+        android:layout_height="160dp"
+        android:src="@drawable/tree02"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/pedometer_tree03"
+        android:layout_width="189dp"
+        android:layout_height="160dp"
+        android:src="@drawable/tree03"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/pedometer_tree04"
+        android:layout_width="189dp"
+        android:layout_height="160dp"
+        android:src="@drawable/tree04"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/pedometer_tree05"
+        android:layout_width="189dp"
+        android:layout_height="160dp"
+        android:src="@drawable/tree05"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/pedometer_tree06"
+        android:layout_width="189dp"
+        android:layout_height="160dp"
+        android:src="@drawable/tree06"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/pedometer_tree07"
+        android:layout_width="189dp"
+        android:layout_height="160dp"
+        android:src="@drawable/tree07"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/pedometer_tree08"
+        android:layout_width="189dp"
+        android:layout_height="160dp"
+        android:src="@drawable/tree08"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/pedometer_tree09"
+        android:layout_width="189dp"
+        android:layout_height="160dp"
+        android:src="@drawable/tree09"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.851" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
