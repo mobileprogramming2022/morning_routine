@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.AlarmClock;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,8 +40,6 @@ public class TodoInflationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_inflation);
-
-
 
         Button sleepTimeBtn = findViewById(R.id.todoSleepTime);
         Button wakeTimeBtn = findViewById(R.id.todoWakeTime);
@@ -88,7 +87,41 @@ public class TodoInflationActivity extends AppCompatActivity {
                 if (SELECTED_SCREEN == -1) {
                     Toast.makeText(TodoInflationActivity.this, "Todo 중에서 선택하세요!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(TodoInflationActivity.this, "Todo 화면으로 넘어갑니다.", Toast.LENGTH_SHORT).show();
+                    int count = 0;
+                    String input = "";
+                    EditText chk1 = (EditText) findViewById(R.id.todoList1);
+                    if (chk1.getText().toString().length() != 0) {
+                        input = input + chk1.getText().toString() + "#";
+                        count++;
+                    }
+
+                    EditText chk2 = (EditText) findViewById(R.id.todoList2);
+                    if (chk2.getText().toString().length() != 0) {
+                        input = input + chk2.getText().toString() + "#";
+                        count++;
+                    }
+
+                    EditText chk3 = (EditText) findViewById(R.id.todoList3);
+                    if (chk3.getText().toString().length() != 0) {
+                        input = input + chk3.getText().toString() + "#";
+                        count++;
+                    }
+
+                    if (input.compareTo("") == 0) {
+                        Toast.makeText(TodoInflationActivity.this, "항목들을 하나 이상 입력하세요!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String stringCount = Integer.toString(count);
+
+                        String wakeTimeDB = wakeTime;
+                        String sleepTimeDB = sleepTime;
+
+                        // DB 에 저장하고
+                        addPlanToFB("CHECK_LIST", "TODO", stringCount + "#" + input, wakeTimeDB, sleepTimeDB);
+
+                        // Main activity 띄운다.
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -162,11 +195,11 @@ public class TodoInflationActivity extends AppCompatActivity {
     void UpdateNow(String id) {
 
         if (id.compareTo("WAKE") == 0) {
-            Button wakeTimeView = findViewById(R.id.studyWakeTime);
+            Button wakeTimeView = findViewById(R.id.todoWakeTime);
             wakeTime = String.format("%02d:%02d", mHour, mMinute);
             wakeTimeView.setText(wakeTime);
         } else {
-            Button sleepTimeView = findViewById(R.id.studySleepTime);
+            Button sleepTimeView = findViewById(R.id.todoSleepTime);
             sleepTime = String.format("%02d:%02d", mHour, mMinute);
             sleepTimeView.setText(sleepTime);
         }

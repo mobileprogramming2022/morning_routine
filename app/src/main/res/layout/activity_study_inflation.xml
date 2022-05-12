@@ -101,8 +101,8 @@
                 android:layout_width="107dp"
                 android:layout_height="102dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/foot"
-                android:text="Walk"
+                android:src="@drawable/book_icon"
+                android:backgroundTint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -113,8 +113,9 @@
                 android:id="@+id/gotoWalkImgButton"
                 android:layout_width="107dp"
                 android:layout_height="102dp"
+                android:src="@drawable/foot"
                 android:scaleType="fitCenter"
-                android:text="Study"
+                android:backgroundTint="@color/nonClickButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.062"
@@ -126,7 +127,9 @@
                 android:id="@+id/fromStudygotoTodoImgButton"
                 android:layout_width="107dp"
                 android:layout_height="102dp"
-                android:text="To do"
+                android:src="@drawable/check_list"
+                android:scaleType="fitCenter"
+                android:backgroundTint="@color/nonClickButton"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.937"
@@ -152,8 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="시간"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.195"
+                    app:layout_constraintEnd_toStartOf="@+id/studyTodoButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -169,6 +171,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/studyUserInput"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

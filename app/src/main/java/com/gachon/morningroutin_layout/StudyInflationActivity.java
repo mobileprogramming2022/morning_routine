@@ -140,7 +140,15 @@ public class StudyInflationActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(StudyInflationActivity.this, "To do 설정 화면으로 이동합니다", Toast.LENGTH_SHORT).show();
+                    String wakeTimeDB = wakeTime;
+                    String sleepTimeDB = sleepTime;
+
+                    // DB 에 저장하고
+                    addPlanToFB("STUDY", "TODO", "NO_INPUT_INDICATOR", wakeTimeDB, sleepTimeDB);
+
+                    // Main activity 띄운다.
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
 
             }

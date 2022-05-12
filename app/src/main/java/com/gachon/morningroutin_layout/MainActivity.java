@@ -98,6 +98,17 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         myTYPE.setText(myTYPE.getText() + " 동안 해봐요!");
+                    } else if (specific_type.compareTo("TODO") == 0) {
+                        String type_db = plan.getType();
+                        if (type_db.compareTo("EXERCISE") == 0) {
+                            myTYPE.setText("오늘은 자유롭게 운동해봐요!");
+                        } else if (type_db.compareTo("STUDY") == 0) {
+                            myTYPE.setText("오늘은 자유롭게 공부해봐요!");
+                        } else {
+                            StringTokenizer st = new StringTokenizer(plan.getInput(), "#");
+                            int today_list = Integer.parseInt(st.nextToken());
+                            myTYPE.setText("오늘의 할 일은 " + today_list + "개 에요!");
+                        }
                     }
 
                     findViewById(R.id.changePlanButton).setOnClickListener(new View.OnClickListener() {
@@ -125,6 +136,9 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                             } else if (plan.specificType.compareTo("TIMER") == 0) {
                                 Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+                                startActivity(intent);
+                            } else if (plan.specificType.compareTo("TODO") == 0) {
+                                Intent intent = new Intent(getApplicationContext(), TodoActivity.class);
                                 startActivity(intent);
                             }
                         }

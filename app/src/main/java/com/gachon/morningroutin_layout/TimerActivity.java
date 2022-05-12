@@ -1,11 +1,14 @@
 package com.gachon.morningroutin_layout;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -63,6 +66,7 @@ public class TimerActivity extends AppCompatActivity {
                 // 공부일 경우에는 방해금지 모드를 켭니다.
                 if (plan.getType().compareTo("STUDY") == 0) {
                     // 방해금지 모드 관련 코드
+                    // setRingerMode(TimerActivity.this, AudioManager.RINGER_MODE_SILENT);
                 }
 
 
@@ -167,31 +171,40 @@ public class TimerActivity extends AppCompatActivity {
                                             getInventory inventory = snapshot.getValue(getInventory.class);
                                             if (tree_id == 1) {
                                                 findViewById(R.id.timer_tree01).setVisibility(View.VISIBLE);
-                                                inventory.setTree01(inventory.getTree01() + 1);
+                                                int remain_tree = inventory.getTree01();
+                                                rewardRef.child("tree01").setValue(remain_tree + 1);
                                             } else if (tree_id == 2) {
                                                 findViewById(R.id.timer_tree02).setVisibility(View.VISIBLE);
-                                                inventory.setTree02(inventory.getTree02() + 1);
+                                                int remain_tree = inventory.getTree02();
+                                                rewardRef.child("tree02").setValue(remain_tree + 1);
                                             } else if (tree_id == 3) {
                                                 findViewById(R.id.timer_tree03).setVisibility(View.VISIBLE);
-                                                inventory.setTree03(inventory.getTree03() + 1);
+                                                int remain_tree = inventory.getTree03();
+                                                rewardRef.child("tree03").setValue(remain_tree + 1);
                                             } else if (tree_id == 4) {
                                                 findViewById(R.id.timer_tree04).setVisibility(View.VISIBLE);
-                                                inventory.setTree04(inventory.getTree04() + 1);
+                                                int remain_tree = inventory.getTree04();
+                                                rewardRef.child("tree04").setValue(remain_tree + 1);
                                             } else if (tree_id == 5) {
                                                 findViewById(R.id.timer_tree05).setVisibility(View.VISIBLE);
-                                                inventory.setTree05(inventory.getTree05() + 1);
+                                                int remain_tree = inventory.getTree05();
+                                                rewardRef.child("tree05").setValue(remain_tree + 1);
                                             } else if (tree_id == 6) {
                                                 findViewById(R.id.timer_tree06).setVisibility(View.VISIBLE);
-                                                inventory.setTree06(inventory.getTree06() + 1);
+                                                int remain_tree = inventory.getTree06();
+                                                rewardRef.child("tree06").setValue(remain_tree + 1);
                                             } else if (tree_id == 7) {
                                                 findViewById(R.id.timer_tree07).setVisibility(View.VISIBLE);
-                                                inventory.setTree07(inventory.getTree07() + 1);
+                                                int remain_tree = inventory.getTree07();
+                                                rewardRef.child("tree07").setValue(remain_tree + 1);
                                             } else if (tree_id == 8) {
                                                 findViewById(R.id.timer_tree08).setVisibility(View.VISIBLE);
-                                                inventory.setTree08(inventory.getTree08() + 1);
+                                                int remain_tree = inventory.getTree08();
+                                                rewardRef.child("tree08").setValue(remain_tree + 1);
                                             } else if (tree_id == 9) {
                                                 findViewById(R.id.timer_tree09).setVisibility(View.VISIBLE);
-                                                inventory.setTree09(inventory.getTree09() + 1);
+                                                int remain_tree = inventory.getTree09();
+                                                rewardRef.child("tree09").setValue(remain_tree + 1);
                                             }
                                         }
 
@@ -230,5 +243,15 @@ public class TimerActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void setRingerMode(Context context, int mode) {
+
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        // Check for DND permissions for API 24+
+        if (android.os.Build.VERSION.SDK_INT < 24 || (android.os.Build.VERSION.SDK_INT >= 24 && !nm.isNotificationPolicyAccessGranted())) {
+            AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            audioManager.setRingerMode(mode);
+        }
     }
 }

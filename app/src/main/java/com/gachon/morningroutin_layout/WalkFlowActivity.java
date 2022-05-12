@@ -159,31 +159,40 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
                             getInventory inventory = snapshot.getValue(getInventory.class);
                             if (tree_id == 1) {
                                 findViewById(R.id.pedometer_tree01).setVisibility(View.VISIBLE);
-                                inventory.setTree01(inventory.getTree01() + 1);
+                                int remain_tree = inventory.getTree01();
+                                rewardRef.child("tree01").setValue(remain_tree + 1);
                             } else if (tree_id == 2) {
                                 findViewById(R.id.pedometer_tree02).setVisibility(View.VISIBLE);
-                                inventory.setTree02(inventory.getTree02() + 1);
+                                int remain_tree = inventory.getTree02();
+                                rewardRef.child("tree02").setValue(remain_tree + 1);
                             } else if (tree_id == 3) {
                                 findViewById(R.id.pedometer_tree03).setVisibility(View.VISIBLE);
-                                inventory.setTree03(inventory.getTree03() + 1);
+                                int remain_tree = inventory.getTree03();
+                                rewardRef.child("tree03").setValue(remain_tree + 1);
                             } else if (tree_id == 4) {
                                 findViewById(R.id.pedometer_tree04).setVisibility(View.VISIBLE);
-                                inventory.setTree04(inventory.getTree04() + 1);
+                                int remain_tree = inventory.getTree04();
+                                rewardRef.child("tree04").setValue(remain_tree + 1);
                             } else if (tree_id == 5) {
                                 findViewById(R.id.pedometer_tree05).setVisibility(View.VISIBLE);
-                                inventory.setTree05(inventory.getTree05() + 1);
+                                int remain_tree = inventory.getTree05();
+                                rewardRef.child("tree05").setValue(remain_tree + 1);
                             } else if (tree_id == 6) {
                                 findViewById(R.id.pedometer_tree06).setVisibility(View.VISIBLE);
-                                inventory.setTree06(inventory.getTree06() + 1);
+                                int remain_tree = inventory.getTree06();
+                                rewardRef.child("tree06").setValue(remain_tree + 1);
                             } else if (tree_id == 7) {
                                 findViewById(R.id.pedometer_tree07).setVisibility(View.VISIBLE);
-                                inventory.setTree07(inventory.getTree07() + 1);
+                                int remain_tree = inventory.getTree07();
+                                rewardRef.child("tree07").setValue(remain_tree + 1);
                             } else if (tree_id == 8) {
                                 findViewById(R.id.pedometer_tree08).setVisibility(View.VISIBLE);
-                                inventory.setTree08(inventory.getTree08() + 1);
+                                int remain_tree = inventory.getTree08();
+                                rewardRef.child("tree08").setValue(remain_tree + 1);
                             } else if (tree_id == 9) {
                                 findViewById(R.id.pedometer_tree09).setVisibility(View.VISIBLE);
-                                inventory.setTree09(inventory.getTree09() + 1);
+                                int remain_tree = inventory.getTree09();
+                                rewardRef.child("tree09").setValue(remain_tree + 1);
                             }
                         }
 

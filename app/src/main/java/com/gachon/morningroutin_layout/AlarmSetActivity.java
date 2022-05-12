@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.AlarmClock;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -97,6 +98,7 @@ public class AlarmSetActivity extends AppCompatActivity {
                 SELECTED_SCREEN = WALK_SCREEN;
                 EditText et = (EditText) findViewById(R.id.userTextInput);
                 et.setVisibility(View.VISIBLE);
+                et.setInputType(InputType.TYPE_CLASS_NUMBER);
                 TextView todoText = findViewById(R.id.exerciseTodoText);
                 todoText.setVisibility(View.INVISIBLE);
                 et.setHint("목표 걸음 수 입력");
@@ -109,6 +111,7 @@ public class AlarmSetActivity extends AppCompatActivity {
                 SELECTED_SCREEN = TIME_SCREEN;
                 EditText et = (EditText) findViewById(R.id.userTextInput);
                 et.setVisibility(View.VISIBLE);
+                et.setInputType(InputType.TYPE_CLASS_TEXT);
                 TextView todoText = findViewById(R.id.exerciseTodoText);
                 todoText.setVisibility(View.INVISIBLE);
                 et.setHint("시간:분:초");
@@ -121,6 +124,7 @@ public class AlarmSetActivity extends AppCompatActivity {
                 SELECTED_SCREEN = TODO_SCREEN;
                 EditText et = (EditText) findViewById(R.id.userTextInput);
                 et.setVisibility(View.INVISIBLE);
+                et.setInputType(InputType.TYPE_CLASS_TEXT);
                 TextView todoText = findViewById(R.id.exerciseTodoText);
                 todoText.setVisibility(View.VISIBLE);
             }
@@ -188,7 +192,15 @@ public class AlarmSetActivity extends AppCompatActivity {
 
                     }
                 } else {
-                    Toast.makeText(AlarmSetActivity.this, "To do 설정 화면으로 이동합니다", Toast.LENGTH_SHORT).show();
+                    String wakeTimeDB = wakeTime;
+                    String sleepTimeDB = sleepTime;
+
+                    // DB 에 저장하고
+                    addPlanToFB("EXERCISE", "TODO", "NO_INPUT_INDICATOR", wakeTimeDB, sleepTimeDB);
+
+                    // Main activity 띄운다.
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
 
             }
