@@ -35,11 +35,13 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
     // get instances for firebase database
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseRef = firebaseDatabase.getReference();
+    // array for image/textviews for drag-and-drop listener and database link
     int tree[] = new int [9];
     TextView inv[] = new TextView[9];
-    ImageView item[]=new ImageView[9];
-    ImageView tile[][]=new ImageView[4][5];
-    final int itemID=2131296528;
+    ImageView item[] = new ImageView[9];
+    ImageView tile[][] = new ImageView[4][5];
+    // item image resource ID for drag-and-drop
+    final int itemID = 2131296542;
 
 
     @Override
@@ -57,7 +59,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
         inv[7] = (TextView)findViewById(R.id.inventory08);
         inv[8] = (TextView)findViewById(R.id.inventory09);
 
-        //set image for drag
+        // set image for drag
         for (int i=0;i<=8; i++) {
             int k = getResources().getIdentifier("item0" + (i+1),"id", getPackageName());
             item[i] = (ImageView) findViewById(k);
@@ -76,6 +78,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
             }
         }
 
+        // get inventory data from firebase, update whenever value changes
         DatabaseReference inventoryRef = firebaseDatabase.getReference();
         inventoryRef.child("inventory").addValueEventListener(new ValueEventListener() {
             @Override
@@ -112,7 +115,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
         });
 
         // bottom menu
-        //image button
+        // image button
         ImageButton main = findViewById(R.id.Plan);
         main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,8 +175,6 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
 
     @Override
     public boolean onLongClick(View view) {
-
-
         // Create a new ClipData.Item from the ImageView object's tag
         ClipData.Item item = new ClipData.Item((CharSequence) view.getTag());
         // Create a new ClipData using the tag as a label, the plain text MIME type, and
@@ -222,6 +223,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 //ViewGroup owner = (ViewGroup) vw.getParent();
                 //owner.removeView(vw); //remove the dragged view
                 // Returns true. DragEvent.getResult() will return true.
+
                 // when item is used, update database
                 DatabaseReference itemRef = firebaseDatabase.getReference();
                 switch (resource.getId()){
