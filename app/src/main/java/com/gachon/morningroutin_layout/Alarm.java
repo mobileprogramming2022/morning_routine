@@ -27,10 +27,10 @@ public class Alarm extends BroadcastReceiver {
 
 //알람 설정(20초 후)+20000 -> 8640000(24시간 - 하루) /2분(20000 * 3 * 2 = 120000
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+120000,pendingIntent);
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+8640000,pendingIntent);
                 //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+20000,pendingIntent);
             }else{
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+120000,pendingIntent);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+8640000,pendingIntent);
                 //alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+20000,pendingIntent);
             }
 
@@ -45,10 +45,10 @@ public class Alarm extends BroadcastReceiver {
 
 //알람 설정(20초 후)+20000 -> 8640000(24시간 - 하루) /2분(20000 * 3 * 2 = 120000 1분 = 60000 * 60 * 24
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+120000,pendingIntent2);
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+8640000,pendingIntent2);
                 //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+20000,pendingIntent);
             }else{
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+120000,pendingIntent2);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+8640000,pendingIntent2);
                 //alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+20000,pendingIntent);
             }
 

@@ -26,6 +26,8 @@ public class MorningAlarmActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                //database에서 어떤 화면으로 갈지 불러오기 -> 그 화면으로 가야 함.
+                //(현재는 단순히 MainActivity.class)로 가는 걸로 되어 있음.
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -41,5 +43,6 @@ public class MorningAlarmActivity extends AppCompatActivity {
                 mediaPlayer.reset();
             }
         });
+
     }
 }

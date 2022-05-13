@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,12 +28,16 @@ public class MainActivity extends AppCompatActivity {
     // Changes
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
+    private AlarmManager alarmManager;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         findViewById(R.id.processView).setVisibility(View.GONE);
         findViewById(R.id.imageView).setVisibility(View.VISIBLE);
@@ -123,6 +130,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             planRef.removeValue();
+                            Intent intent2 = new Intent(getApplicationContext() ,Alarm.class);
+                            PendingIntent pendingIntent= PendingIntent.getBroadcast(getApplicationContext(),20, intent2, PendingIntent.FLAG_MUTABLE);
+
+                            alarmManager.cancel(pendingIntent);
+
+                            PendingIntent pendingIntent2= PendingIntent.getBroadcast(getApplicationContext(),30, intent2, PendingIntent.FLAG_MUTABLE);
+                            alarmManager.cancel(pendingIntent2);
+
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }

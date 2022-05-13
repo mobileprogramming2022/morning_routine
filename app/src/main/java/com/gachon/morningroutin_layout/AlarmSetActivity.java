@@ -36,7 +36,11 @@ public class AlarmSetActivity extends AppCompatActivity {
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private AlarmManager alarmManager;
 
-    int mYear, mMonth, mDay, mHour, mMinute;
+    int mYear, mMonth, mDay;
+    int mHour_wake = 7;
+    int mMinute_wake = 0;
+    int mHour_sleep = 23;
+    int mMinute_sleep = 30;
     int SELECTED_SCREEN = 0; // init state
     final int WALK_SCREEN = 1;
     final int TIME_SCREEN = 2;
@@ -52,7 +56,6 @@ public class AlarmSetActivity extends AppCompatActivity {
 
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent alarmIntent = new Intent(getApplicationContext(), Alarm.class);
 
         Button sleepTimeBtn = findViewById(R.id.sleepTimeView);
         Button wakeTimeBtn = findViewById(R.id.wakeTimeView);
@@ -150,67 +153,99 @@ public class AlarmSetActivity extends AppCompatActivity {
 
                 if (SELECTED_SCREEN == 0) {
                     Toast.makeText(AlarmSetActivity.this, "걷기 / 시간 / Todo 중에서 선택하세요!", Toast.LENGTH_SHORT).show();
-                } else if (SELECTED_SCREEN == WALK_SCREEN) {
-                    // 만보기로 보낸다.
-                    EditText et = (EditText) findViewById(R.id.userTextInput);
-                    boolean isInput = false;
-                    if (et.getText().toString().length() != 0) {
-                        isInput = true;
-                    }
+                }else{
+                    if (SELECTED_SCREEN == WALK_SCREEN) {
+                        // 만보기로 보낸다.
+                        EditText et = (EditText) findViewById(R.id.userTextInput);
+                        boolean isInput = false;
+                        if (et.getText().toString().length() != 0) {
+                            isInput = true;
+                        }
+                        if (!isInput) {
+                            Toast.makeText(AlarmSetActivity.this, "목표 걸음 수를 입력하세요!", Toast.LENGTH_SHORT).show();
+                        } else {
 
-                    if (!isInput) {
-                        Toast.makeText(AlarmSetActivity.this, "목표 걸음 수를 입력하세요!", Toast.LENGTH_SHORT).show();
-                    } else {
+                            String USER_INPUT_DATA = et.getText().toString();
+                            String wakeTimeDB = wakeTime;
+                            String sleepTimeDB = sleepTime;
 
+                            // DB 에 저장하고
+                            addPlanToFB("EXERCISE", "PEDOMETER", USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
 
-                        String USER_INPUT_DATA = et.getText().toString();
+                            // Main activity 띄운다.
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+
+                        }
+                    } else if (SELECTED_SCREEN == TIME_SCREEN) {
+                        EditText et = (EditText) findViewById(R.id.userTextInput);
+                        boolean isInput = false;
+                        if (et.getText().toString().length() != 0) {
+                            isInput = true;
+                        }
+
+                        if (!isInput) {
+                            Toast.makeText(AlarmSetActivity.this, "목표 시간을 입력하세요!", Toast.LENGTH_SHORT).show();
+                        } else {
+
+                            String USER_INPUT_DATA = et.getText().toString();
+                            String wakeTimeDB = wakeTime;
+                            String sleepTimeDB = sleepTime;
+
+                            // DB 에 저장하고
+                            addPlanToFB("EXERCISE", "TIMER", USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
+                        }
+                    } else { //SELECTED_SCREEN == custom
                         String wakeTimeDB = wakeTime;
                         String sleepTimeDB = sleepTime;
 
                         // DB 에 저장하고
-                        addPlanToFB("EXERCISE", "PEDOMETER", USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
-
-                        // Main activity 띄운다.
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-
+                        addPlanToFB("EXERCISE", "TODO", "NO_INPUT_INDICATOR", wakeTimeDB, sleepTimeDB);
                     }
-                } else if (SELECTED_SCREEN == TIME_SCREEN) {
-                    EditText et = (EditText) findViewById(R.id.userTextInput);
-                    boolean isInput = false;
-                    if (et.getText().toString().length() != 0) {
-                        isInput = true;
-                    }
+                    //알람 설정
+                    Intent alarmIntent = new Intent(getApplicationContext(), Alarm.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("state", "morning");
+                    alarmIntent.putExtras(bundle);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 20, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
 
-                    if (!isInput) {
-                        Toast.makeText(AlarmSetActivity.this, "목표 시간을 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.HOUR_OF_DAY, mHour_wake);
+                    calendar.set(Calendar.MINUTE, mMinute_wake);
+                    calendar.set(Calendar.SECOND, 0);
+                    calendar.set(Calendar.MILLISECOND, 0);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
                     } else {
-
-                        String USER_INPUT_DATA = et.getText().toString();
-                        String wakeTimeDB = wakeTime;
-                        String sleepTimeDB = sleepTime;
-
-                        // DB 에 저장하고
-                        addPlanToFB("EXERCISE", "TIMER", USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
-
-                        // Main activity 띄운다.
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-
-
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
                     }
-                } else {
-                    String wakeTimeDB = wakeTime;
-                    String sleepTimeDB = sleepTime;
 
-                    // DB 에 저장하고
-                    addPlanToFB("EXERCISE", "TODO", "NO_INPUT_INDICATOR", wakeTimeDB, sleepTimeDB);
+                    Intent intent2 = new Intent(getApplicationContext(), Alarm.class);
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putString("state", "night");
+                    intent2.putExtras(bundle2);
+                    PendingIntent pendingIntent2 = PendingIntent.getBroadcast(getApplicationContext(), 30, intent2, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
 
+                    Calendar calendar2 = Calendar.getInstance();
+                    calendar2.set(Calendar.HOUR_OF_DAY, mHour_sleep);
+                    calendar2.set(Calendar.MINUTE, mMinute_sleep);
+                    calendar2.set(Calendar.SECOND, 0);
+                    calendar2.set(Calendar.MILLISECOND, 0);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent2);
+                        //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+                    } else {
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent2);
+                        //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+                    }
                     // Main activity 띄운다.
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
-
             }
         });
 
@@ -232,63 +267,25 @@ public class AlarmSetActivity extends AppCompatActivity {
         mMonth = cal.get(Calendar.MONTH);
         mDay = cal.get(Calendar.DAY_OF_MONTH);
 
-        mHour = cal.get(Calendar.HOUR_OF_DAY);
-        mMinute = cal.get(Calendar.MINUTE);
+        mHour_wake = cal.get(Calendar.HOUR_OF_DAY);
+        mMinute_wake = cal.get(Calendar.MINUTE);
+        mHour_sleep = cal.get(Calendar.HOUR_OF_DAY);
+        mMinute_sleep = cal.get(Calendar.MINUTE);
 
 
         wakeTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //김부경 추가(아침 알람)
-                //AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                //Intent alarmIntent = new Intent(getApplicationContext(), Alarm.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("state", "morning");
-                alarmIntent.putExtras(bundle);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 20, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.HOUR_OF_DAY, mHour);
-                calendar.set(Calendar.MINUTE, mMinute);
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MILLISECOND, 0);
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                    //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-                } else {
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                    //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-                }
-
-                new TimePickerDialog(AlarmSetActivity.this, wakeTimeSetListener, mHour, mMinute, false).show();
+                new TimePickerDialog(AlarmSetActivity.this, wakeTimeSetListener, mHour_wake, mMinute_wake, false).show();
             }
         });
 
         sleepTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //김부경 추가(저녁 알람)
-                Bundle bundle = new Bundle();
-                bundle.putString("state", "night");
-                alarmIntent.putExtras(bundle);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 30, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
 
-                Calendar calendar2 = Calendar.getInstance();
-                calendar2.set(Calendar.HOUR_OF_DAY, mHour);
-                calendar2.set(Calendar.MINUTE, mMinute);
-                calendar2.set(Calendar.SECOND, 0);
-                calendar2.set(Calendar.MILLISECOND, 0);
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent);
-                    //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-                } else {
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent);
-                    //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-                }
-
-                new TimePickerDialog(AlarmSetActivity.this, sleepTimeSetListener, mHour, mMinute, false).show();
+                new TimePickerDialog(AlarmSetActivity.this, sleepTimeSetListener, mHour_sleep, mMinute_sleep,false).show();
             }
         });
 
@@ -301,8 +298,8 @@ public class AlarmSetActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // TODO Auto-generated method stub
             //사용자가 입력한 값을 가져온뒤
-            mHour = hourOfDay;
-            mMinute = minute;
+            mHour_wake = hourOfDay;
+            mMinute_wake = minute;
 
             //텍스트뷰의 값을 업데이트함
             UpdateNow("WAKE");
@@ -315,8 +312,8 @@ public class AlarmSetActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // TODO Auto-generated method stub
             //사용자가 입력한 값을 가져온뒤
-            mHour = hourOfDay;
-            mMinute = minute;
+            mHour_sleep = hourOfDay;
+            mMinute_sleep = minute;
 
             //텍스트뷰의 값을 업데이트함
             UpdateNow("SLEEP");
@@ -328,11 +325,11 @@ public class AlarmSetActivity extends AppCompatActivity {
 
         if (id.compareTo("WAKE") == 0) {
             Button wakeTimeView = findViewById(R.id.wakeTimeView);
-            wakeTime = String.format("%02d:%02d", mHour, mMinute);
+            wakeTime = String.format("%02d:%02d", mHour_wake, mMinute_wake);
             wakeTimeView.setText(wakeTime);
         } else {
             Button sleepTimeView = findViewById(R.id.sleepTimeView);
-            sleepTime = String.format("%02d:%02d", mHour, mMinute);
+            sleepTime = String.format("%02d:%02d", mHour_sleep, mMinute_sleep);
             sleepTimeView.setText(sleepTime);
         }
     }
@@ -341,4 +338,5 @@ public class AlarmSetActivity extends AppCompatActivity {
         getTodayPlan todayPlan = new getTodayPlan(TYPE, specific_type, USER_INPUT_DATA, wakeTime, sleepTime);
         database.child("daily").child("12345").setValue(todayPlan);
     }
+
 }
