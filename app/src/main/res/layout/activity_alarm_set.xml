@@ -44,12 +44,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="자는 시간"
+                android:text="기상 시간"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.194"
+                app:layout_constraintHorizontal_bias="0.234"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.051"
@@ -58,22 +58,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="깨는 시간"
+                android:text="취침 시간"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.816"
+                app:layout_constraintHorizontal_bias="0.759"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.051"
                 tools:ignore="MissingConstraints" />
 
             <Button
-                android:id="@+id/sleepTimeView"
+                android:id="@+id/wakeTimeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="23:30"
+                android:text="07:00"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -84,10 +84,10 @@
                 app:layout_constraintVertical_bias="0.105" />
 
             <Button
-                android:id="@+id/wakeTimeView"
+                android:id="@+id/sleepTimeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="07:00"
+                android:text="23:30"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"

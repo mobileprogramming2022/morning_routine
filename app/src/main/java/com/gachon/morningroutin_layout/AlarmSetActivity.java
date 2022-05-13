@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.text.InputType;
@@ -255,26 +258,28 @@ public class AlarmSetActivity extends AppCompatActivity {
             mHour = hourOfDay;
             mMinute = minute;
 
-            Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
-            intent.putExtra(AlarmClock.EXTRA_HOUR,mHour);
-            intent.putExtra(AlarmClock.EXTRA_MINUTES,mMinute);
-            intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Good Morning");
+            //김부경 추가(아침 알람)
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent alarmIntent = new Intent(getApplicationContext(), Alarm.class); //김부경추가
+            Bundle bundle = new Bundle();
+            bundle.putString("state", "morning");
+            alarmIntent.putExtras(bundle);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 20, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
 
-            ArrayList<Integer> alarmDays = new ArrayList<Integer>();
-            alarmDays.add(Calendar.MONDAY);
-            alarmDays.add(Calendar.TUESDAY);
-            alarmDays.add(Calendar.WEDNESDAY);
-            alarmDays.add(Calendar.THURSDAY);
-            alarmDays.add(Calendar.FRIDAY);
-            alarmDays.add(Calendar.SATURDAY);
-            alarmDays.add(Calendar.SUNDAY);
-            intent.putExtra(AlarmClock.EXTRA_DAYS,alarmDays);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, mHour);
+            calendar.set(Calendar.MINUTE, mMinute);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
 
-            intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
-
-            if(mHour <= 24 && mMinute <= 60) {
-                startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
             }
+
             //텍스트뷰의 값을 업데이트함
 
             UpdateNow("WAKE");
@@ -290,26 +295,11 @@ public class AlarmSetActivity extends AppCompatActivity {
             mHour = hourOfDay;
             mMinute = minute;
 
-            Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM);
-            intent.putExtra(AlarmClock.EXTRA_HOUR,mHour);
-            intent.putExtra(AlarmClock.EXTRA_MINUTES,mMinute);
-            intent.putExtra(AlarmClock.EXTRA_MESSAGE, "Good Night");
-
-            ArrayList<Integer> alarmDays = new ArrayList<Integer>();
-            alarmDays.add(Calendar.MONDAY);
-            alarmDays.add(Calendar.TUESDAY);
-            alarmDays.add(Calendar.WEDNESDAY);
-            alarmDays.add(Calendar.THURSDAY);
-            alarmDays.add(Calendar.FRIDAY);
-            alarmDays.add(Calendar.SATURDAY);
-            alarmDays.add(Calendar.SUNDAY);
-            intent.putExtra(AlarmClock.EXTRA_DAYS,alarmDays);
-
-            intent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
-
-            if(mHour <= 24 && mMinute <= 60) {
-                startActivity(intent);
-            }
+            //김부경 추가(저녁 알람)
+            Bundle bundle = new Bundle();
+            bundle.putString("state", "night");
+            alarmIntent.putExtras(bundle);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 30, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
             //텍스트뷰의 값을 업데이트함
 
             UpdateNow("SLEEP");
