@@ -42,6 +42,9 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
     ImageView item[] = new ImageView[9];
     ImageView tile[][] = new ImageView[4][5];
 
+    int village[][]= new int[4][5];
+    // item image resource ID for drag-and-drop
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +197,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
 
     @Override
     public boolean onDrag(View v, DragEvent event) {
+        int itemID = item[0].getId();
         int action = event.getAction();
         switch (action) {
             case DragEvent.ACTION_DRAG_STARTED:
@@ -227,7 +231,6 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
 
                 // get item/tile ID on create
                 int tileID = tile[0][0].getId();
-                int itemID = resource.getId();
 
                 DatabaseReference villageRef = firebaseDatabase.getReference();
                 for(int i = 1; i <= 20; i++){
@@ -255,131 +258,110 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                         }
                     });
                 }
-
-
-                /*
-                switch (resource.getId()){
-                    case itemID:
-                        itemRef.child("inventory").child("tree01").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int tree1 = (int)snapshot.getValue(Integer.class);
-                                tree1 -= 1;
-                                itemRef.child("inventory").child("tree01").setValue(tree1);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
-                    case itemID + 1:
-                        itemRef.child("inventory").child("tree02").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int tree2 = (int)snapshot.getValue(Integer.class);
-                                tree2 -= 1;
-                                itemRef.child("inventory").child("tree02").setValue(tree2);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
-                    case itemID + 2:
-                        itemRef.child("inventory").child("tree03").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int tree3 = (int)snapshot.getValue(Integer.class);
-                                tree3 -= 1;
-                                itemRef.child("inventory").child("tree03").setValue(tree3);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
-                    case itemID + 3:
-                        itemRef.child("inventory").child("tree04").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int tree4 = (int)snapshot.getValue(Integer.class);
-                                tree4 -= 1;
-                                itemRef.child("inventory").child("tree04").setValue(tree4);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
-                    case itemID + 4:
-                        itemRef.child("inventory").child("tree05").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int tree5 = (int)snapshot.getValue(Integer.class);
-                                tree5 -= 1;
-                                itemRef.child("inventory").child("tree05").setValue(tree5);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
-                    case itemID + 5:
-                        itemRef.child("inventory").child("tree06").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int tree6 = (int)snapshot.getValue(Integer.class);
-                                tree6 -= 1;
-                                itemRef.child("inventory").child("tree06").setValue(tree6);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
-                    case itemID + 6:
-                        itemRef.child("inventory").child("tree07").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int tree7 = (int)snapshot.getValue(Integer.class);
-                                tree7 -= 1;
-                                itemRef.child("inventory").child("tree07").setValue(tree7);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
-                    case itemID + 7:
-                        itemRef.child("inventory").child("tree08").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int tree8 = (int)snapshot.getValue(Integer.class);
-                                tree8 -= 1;
-                                itemRef.child("inventory").child("tree08").setValue(tree8);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
-                    case itemID + 8:
-                        itemRef.child("inventory").child("tree09").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                int tree9 = (int)snapshot.getValue(Integer.class);
-                                tree9 -= 1;
-                                itemRef.child("inventory").child("tree09").setValue(tree9);
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        break;
-                    default:
-                        break;
+                else if(resource.getId() == itemID+1){
+                    itemRef.child("inventory").child("tree02").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("tree02").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
                 }
-                */
+                else if(resource.getId() == itemID+2){
+                    itemRef.child("inventory").child("tree03").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("tree03").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                else if(resource.getId() == itemID+3){
+                    itemRef.child("inventory").child("tree04").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("tree04").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                else if(resource.getId() == itemID+4){
+                    itemRef.child("inventory").child("tree05").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("tree05").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                else if(resource.getId() == itemID+5){
+                    itemRef.child("inventory").child("tree06").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("tree06").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                else if(resource.getId() == itemID+6){
+                    itemRef.child("inventory").child("tree07").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("tree07").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                else if(resource.getId() == itemID+7){
+                    itemRef.child("inventory").child("tree08").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("tree08").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                else if(resource.getId() == itemID+8){
+                    itemRef.child("inventory").child("tree09").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("tree09").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
                 return true;
 
             case DragEvent.ACTION_DRAG_ENDED:
