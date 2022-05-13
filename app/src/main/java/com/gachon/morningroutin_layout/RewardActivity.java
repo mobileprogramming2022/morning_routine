@@ -41,8 +41,6 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
     TextView inv[] = new TextView[9];
     ImageView item[] = new ImageView[9];
     ImageView tile[][] = new ImageView[4][5];
-    // item image resource ID for drag-and-drop
-    final int itemID = 2131296544;
 
 
     @Override
@@ -227,7 +225,10 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
 
                 //Toast.makeText(getApplicationContext(), String.valueOf(setting.getId()), Toast.LENGTH_LONG).show();
 
-                int tileID = 2131296509;
+                // get item/tile ID on create
+                int tileID = tile[0][0].getId();
+                int itemID = resource.getId();
+
                 DatabaseReference villageRef = firebaseDatabase.getReference();
                 for(int i = 1; i <= 20; i++){
                     if(setting.getId() == (tileID + i - 1)){
@@ -241,6 +242,22 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
 
                 // when item is used, update database
                 DatabaseReference itemRef = firebaseDatabase.getReference();
+                if(resource.getId() == itemID){
+                    itemRef.child("inventory").child("tree01").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("tree01").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+
+
+                /*
                 switch (resource.getId()){
                     case itemID:
                         itemRef.child("inventory").child("tree01").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -362,6 +379,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                     default:
                         break;
                 }
+                */
                 return true;
 
             case DragEvent.ACTION_DRAG_ENDED:
