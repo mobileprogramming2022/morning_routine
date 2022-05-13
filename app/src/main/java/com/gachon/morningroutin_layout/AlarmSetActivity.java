@@ -248,6 +248,8 @@ public class AlarmSetActivity extends AppCompatActivity {
 
     }
 
+    AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+    Intent alarmIntent = new Intent(getApplicationContext(), Alarm.class);
 
     TimePickerDialog.OnTimeSetListener wakeTimeSetListener
             = new TimePickerDialog.OnTimeSetListener() {
@@ -259,8 +261,8 @@ public class AlarmSetActivity extends AppCompatActivity {
             mMinute = minute;
 
             //김부경 추가(아침 알람)
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent alarmIntent = new Intent(getApplicationContext(), Alarm.class); //김부경추가
+            //AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            //Intent alarmIntent = new Intent(getApplicationContext(), Alarm.class);
             Bundle bundle = new Bundle();
             bundle.putString("state", "morning");
             alarmIntent.putExtras(bundle);
@@ -299,7 +301,22 @@ public class AlarmSetActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putString("state", "night");
             alarmIntent.putExtras(bundle);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 30, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 30, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
+
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.set(Calendar.HOUR_OF_DAY, mHour);
+            calendar2.set(Calendar.MINUTE, mMinute);
+            calendar2.set(Calendar.SECOND, 0);
+            calendar2.set(Calendar.MILLISECOND, 0);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            }
+
             //텍스트뷰의 값을 업데이트함
 
             UpdateNow("SLEEP");
