@@ -42,10 +42,6 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
     ImageView item[] = new ImageView[9];
     ImageView tile[][] = new ImageView[4][5];
 
-    int village[][]= new int[4][5];
-    // item image resource ID for drag-and-drop
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +111,30 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 Toast.makeText(getApplicationContext(), "Failed to connect DB", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // get village data from firebase, update whenever value changes
+        DatabaseReference villageRef = firebaseDatabase.getReference();
+        villageRef.child("village").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String villageList[] = new String[20];
+                getVillage village = snapshot.getValue(getVillage.class);
+                villageList = village.getVillageArray();
+                for(int i = 0; i < 4; i++){
+                    for(int j = 0; j < 5; j++){
+                        if(villageList[i * 5 + j].equals("tree00") == false){
+                            int imageSrc = getResources().getIdentifier(villageList[i * 5 + j], "drawable", getPackageName());
+                            tile[i][j].setImageResource(imageSrc);
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         // bottom menu
         // image button
@@ -237,7 +257,12 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                     if(setting.getId() == (tileID + i - 1)){
                         for(int j = 1; j <= 9; j++){
                             if(resource.getId() == (itemID + j - 1)){
-                                villageRef.child("village").child("tile0" + i).setValue("tree0" + j);
+                                if(i < 10){
+                                    villageRef.child("village").child("tile0" + i).setValue("tree0" + j);
+                                }
+                                else{
+                                    villageRef.child("village").child("tile" + i).setValue("tree0" + j);
+                                }
                             }
                         }
                     }
