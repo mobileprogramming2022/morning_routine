@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
@@ -41,7 +42,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
     ImageView item[] = new ImageView[9];
     ImageView tile[][] = new ImageView[4][5];
     // item image resource ID for drag-and-drop
-    final int itemID = 2131296542;
+    final int itemID = 2131296544;
 
 
     @Override
@@ -223,6 +224,20 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 //ViewGroup owner = (ViewGroup) vw.getParent();
                 //owner.removeView(vw); //remove the dragged view
                 // Returns true. DragEvent.getResult() will return true.
+
+                //Toast.makeText(getApplicationContext(), String.valueOf(setting.getId()), Toast.LENGTH_LONG).show();
+
+                int tileID = 2131296509;
+                DatabaseReference villageRef = firebaseDatabase.getReference();
+                for(int i = 1; i <= 20; i++){
+                    if(setting.getId() == (tileID + i - 1)){
+                        for(int j = 1; j <= 9; j++){
+                            if(resource.getId() == (itemID + j - 1)){
+                                villageRef.child("village").child("tile0" + i).setValue("tree0" + j);
+                            }
+                        }
+                    }
+                }
 
                 // when item is used, update database
                 DatabaseReference itemRef = firebaseDatabase.getReference();
