@@ -3,6 +3,7 @@
     package="com.gachon.morningroutin_layout">
     <!-- internet permission for firebase connection -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
@@ -14,6 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Morningroutin_layout">
+        <activity
+            android:name=".MorningAlarmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NightAlarmActivity"
+            android:exported="false" />
         <activity
             android:name=".TodoActivity"
             android:exported="false" />
@@ -50,6 +57,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".Alarm"></receiver>
     </application>
 
 </manifest>
