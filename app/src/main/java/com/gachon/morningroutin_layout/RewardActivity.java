@@ -1,7 +1,9 @@
 package com.gachon.morningroutin_layout;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -77,6 +79,13 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 int k = getResources().getIdentifier("imageView" + (i+1) + "_" + (j+1), "id", getPackageName());
                 tile[i][j]=(ImageView) findViewById(k);
                 tile[i][j].setOnDragListener(this);
+                tile[i][j].setOnLongClickListener(new View.OnLongClickListener(){
+                    @Override
+                    public boolean onLongClick(View view) {
+                        showDialog();
+                        return true;
+                    }
+                });
             }
         }
 
@@ -173,6 +182,26 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 overridePendingTransition(0, 0);
             }
         });
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(RewardActivity.this)
+                .setTitle("아이템 삭제")
+                .setMessage("해당 아이템이 사라집니다. 계속 하시겠습니까?")
+                .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(RewardActivity.this, "삭제", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(RewardActivity.this, "삭제 안함", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.show();
     }
 
     @Override
