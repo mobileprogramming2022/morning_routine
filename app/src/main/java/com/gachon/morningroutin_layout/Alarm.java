@@ -26,10 +26,10 @@ public class Alarm extends BroadcastReceiver {
             PendingIntent pendingIntent=PendingIntent.getBroadcast(context,20,intent,PendingIntent.FLAG_MUTABLE);
 
 //알람 설정(20초 후)+20000 -> 8640000(24시간 - 하루) /2분(20000 * 3 * 2 = 120000
-            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+8640000,pendingIntent);
                 //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+20000,pendingIntent);
-            }else{
+            } else {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+8640000,pendingIntent);
                 //alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+20000,pendingIntent);
             }
@@ -37,7 +37,6 @@ public class Alarm extends BroadcastReceiver {
             Intent tempIntent = new Intent(context.getApplicationContext(), MorningAlarmActivity.class);
             tempIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(tempIntent);
-
         }
         if(intent.getExtras().getString("state").equals("night")){
 
