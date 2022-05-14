@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MorningAlarmActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/alarmSetBackground"
     android:orientation="vertical">
 
     <Button
-        android:id = "@+id/back_button"
-        android:layout_width="match_parent"
+        android:id="@+id/fromMorningAlarmGotoActivity_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="go to main"
+        android:text="예정된 plan 으로 이동"
         android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.409"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/alarm_stop_button"
+        android:id="@+id/morning_alarm_stop_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="alarm_stop"
         android:textAllCaps="false"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="48dp" />
+        tools:layout_editor_absoluteX="-37dp"
+        tools:layout_editor_absoluteY="442dp" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

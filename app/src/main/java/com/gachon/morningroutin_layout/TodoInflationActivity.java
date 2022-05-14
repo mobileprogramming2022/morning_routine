@@ -3,10 +3,15 @@ package com.gachon.morningroutin_layout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,18 +23,25 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
 public class TodoInflationActivity extends AppCompatActivity {
 
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    private AlarmManager alarmManager;
 
-
-    int mYear, mMonth, mDay, mHour, mMinute;
+    int mYear, mMonth, mDay;
+    int mHour_wake = 7;
+    int mMinute_wake = 0;
+    int mHour_sleep = 23;
+    int mMinute_sleep = 30;
     int SELECTED_SCREEN = 0; // init state
+    final int TIME_SCREEN = 2;
     final int TODO_SCREEN = 3;
 
     String wakeTime = "07:00";
@@ -40,6 +52,9 @@ public class TodoInflationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_inflation);
+
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
 
         Button sleepTimeBtn = findViewById(R.id.todoSleepTime);
         Button wakeTimeBtn = findViewById(R.id.todoWakeTime);
@@ -78,8 +93,8 @@ public class TodoInflationActivity extends AppCompatActivity {
         });
 
 
-
-        @SuppressLint("CutPasteId") Button SAVE = findViewById(R.id.todoSaveButton);
+        Intent alarmIntent = new Intent(getApplicationContext(), Alarm.class);
+        Button SAVE = findViewById(R.id.todoSaveButton);
         SAVE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +133,9 @@ public class TodoInflationActivity extends AppCompatActivity {
                         // DB 에 저장하고
                         addPlanToFB("CHECK_LIST", "TODO", stringCount + "#" + input, wakeTimeDB, sleepTimeDB);
 
+                        setMorningAlarm(alarmIntent);
+                        setNightAlarm(alarmIntent);
+
                         // Main activity 띄운다.
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
@@ -144,21 +162,23 @@ public class TodoInflationActivity extends AppCompatActivity {
         mMonth = cal.get(Calendar.MONTH);
         mDay = cal.get(Calendar.DAY_OF_MONTH);
 
-        mHour = cal.get(Calendar.HOUR_OF_DAY);
-        mMinute = cal.get(Calendar.MINUTE);
+        mHour_wake = cal.get(Calendar.HOUR_OF_DAY);
+        mMinute_wake = cal.get(Calendar.MINUTE);
+        mHour_sleep = cal.get(Calendar.HOUR_OF_DAY);
+        mMinute_sleep = cal.get(Calendar.MINUTE);
 
 
         wakeTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TimePickerDialog(TodoInflationActivity.this, todoWakeTimeSetListener, mHour, mMinute, false).show();
+                new TimePickerDialog(TodoInflationActivity.this, todoWakeTimeSetListener, mHour_wake, mMinute_wake, false).show();
             }
         });
 
         sleepTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TimePickerDialog(TodoInflationActivity.this, todoSleepTimeSetListener, mHour, mMinute, false).show();
+                new TimePickerDialog(TodoInflationActivity.this, todoSleepTimeSetListener, mHour_sleep, mMinute_sleep, false).show();
             }
         });
 
@@ -172,8 +192,8 @@ public class TodoInflationActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // TODO Auto-generated method stub
             //사용자가 입력한 값을 가져온뒤
-            mHour = hourOfDay;
-            mMinute = minute;
+            mHour_wake = hourOfDay;
+            mMinute_wake = minute;
 
             UpdateNow("WAKE");
         }
@@ -185,22 +205,23 @@ public class TodoInflationActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // TODO Auto-generated method stub
             //사용자가 입력한 값을 가져온뒤
-            mHour = hourOfDay;
-            mMinute = minute;
+            mHour_sleep = hourOfDay;
+            mMinute_sleep = minute;
 
             UpdateNow("SLEEP");
         }
     };
 
+    @SuppressLint("DefaultLocale")
     void UpdateNow(String id) {
 
         if (id.compareTo("WAKE") == 0) {
             Button wakeTimeView = findViewById(R.id.todoWakeTime);
-            wakeTime = String.format("%02d:%02d", mHour, mMinute);
+            wakeTime = String.format("%02d:%02d", mHour_wake, mMinute_wake);
             wakeTimeView.setText(wakeTime);
         } else {
             Button sleepTimeView = findViewById(R.id.todoSleepTime);
-            sleepTime = String.format("%02d:%02d", mHour, mMinute);
+            sleepTime = String.format("%02d:%02d", mHour_sleep, mMinute_sleep);
             sleepTimeView.setText(sleepTime);
         }
     }
@@ -208,6 +229,100 @@ public class TodoInflationActivity extends AppCompatActivity {
     public void addPlanToFB(String TYPE, String specific_type, String USER_INPUT_DATA, String wakeTime, String sleepTime) {
         getTodayPlan todayPlan = new getTodayPlan(TYPE, specific_type, USER_INPUT_DATA, wakeTime, sleepTime);
         database.child("daily").child("12345").setValue(todayPlan);
+    }
+
+    void setMorningAlarm(Intent alarmIntent){
+        Bundle bundle = new Bundle();
+        bundle.putString("state", "morning");
+        //bundle.putString("what",Integer.toString(Alarm.justSet_morning - 1));
+        alarmIntent.putExtras(bundle);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 20, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
+
+        long now = System.currentTimeMillis();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, mHour_wake);
+        calendar.set(Calendar.MINUTE, mMinute_wake);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        if(calendar.getTimeInMillis() < now){
+            Log.d("알람","현재시간보다 이전 - morning");
+            Date date = new Date(now);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String[] today = sdf.format(date).split("-"); //year,month,day of today
+
+            int year_today = Integer.parseInt(today[0]);
+            int month_today = Integer.parseInt(today[1]);
+            int day_today = Integer.parseInt(today[2]);
+
+            GregorianCalendar nowcalendar= new GregorianCalendar(year_today, month_today, day_today + 1,mHour_wake, mMinute_wake);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nowcalendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, nowcalendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            }
+        }
+        else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            }
+        }
+    }
+
+    void setNightAlarm(Intent alarmIntent){
+        //Intent alarmIntent2 = new Intent(getApplicationContext(), Alarm.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("state", "night");
+        //Log.d("무엇", Integer.toString(Alarm.justSet_night - 1));    // 로그 확인용
+        //bundle.putString("what",Integer.toString(Alarm.justSet_night - 1));
+        alarmIntent.putExtras(bundle);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 30, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(Calendar.HOUR_OF_DAY, mHour_sleep);
+        calendar2.set(Calendar.MINUTE, mMinute_sleep);
+        calendar2.set(Calendar.SECOND, 0);
+        calendar2.set(Calendar.MILLISECOND, 0);
+
+        long now = System.currentTimeMillis();
+
+        if(calendar2.getTimeInMillis() < now){
+            Log.d("알람","현재시간보다 이전 - night");
+            Date date = new Date(now);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String[] today = sdf.format(date).split("-"); //year,month,day of today
+
+            int year_today = Integer.parseInt(today[0]);
+            int month_today = Integer.parseInt(today[1]);
+            int day_today = Integer.parseInt(today[2]);
+
+            GregorianCalendar nowcalendar= new GregorianCalendar(year_today, month_today, day_today + 1,mHour_wake, mMinute_wake);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nowcalendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, nowcalendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            }
+        }
+        else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            }
+        }
     }
 
 }

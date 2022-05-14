@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.processView).setVisibility(View.VISIBLE);
                     findViewById(R.id.imageView).setVisibility(View.GONE);
                     findViewById(R.id.textView).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.startActivityImmediately).setVisibility(View.VISIBLE);
 
                     TextView myTYPE = findViewById(R.id.myArchive);
                     TextView myWakeTime = findViewById(R.id.myWakeTime);
@@ -143,21 +142,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-                    findViewById(R.id.startActivityImmediately).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (plan.specificType.compareTo("PEDOMETER") == 0) {
-                                Intent intent = new Intent(getApplicationContext(), WalkFlowActivity.class);
-                                startActivity(intent);
-                            } else if (plan.specificType.compareTo("TIMER") == 0) {
-                                Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
-                                startActivity(intent);
-                            } else if (plan.specificType.compareTo("TODO") == 0) {
-                                Intent intent = new Intent(getApplicationContext(), TodoActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-                    });
                 }
 
             }

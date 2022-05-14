@@ -16,9 +16,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/processView"
-            android:layout_width="396dp"
-            android:layout_height="320dp"
-            android:background="@color/alarmSetBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#40abd1ff"
 
             android:visibility="visible"
 
@@ -80,10 +80,10 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.178"
+                app:layout_constraintHorizontal_bias="0.186"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.941" />
+                app:layout_constraintVertical_bias="0.854" />
 
             <Button
                 android:id="@+id/deletePlanButton"
@@ -93,10 +93,10 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintHorizontal_bias="0.82"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.941" />
+                app:layout_constraintVertical_bias="0.854" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -132,18 +132,6 @@
             android:shadowDy="7.0"
             android:shadowColor="#000000" />
 
-        <Button
-            android:visibility="invisible"
-            android:id="@+id/startActivityImmediately"
-            android:text="지금 바로 시작하기 (기능 테스트용)"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.785" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

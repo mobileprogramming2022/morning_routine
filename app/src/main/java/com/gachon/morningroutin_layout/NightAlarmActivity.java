@@ -21,7 +21,7 @@ public class NightAlarmActivity extends AppCompatActivity {
         mediaPlayer.start();
 
         getSupportActionBar().setTitle("Alarm Activity2");
-        Button back = (Button)findViewById(R.id.back_button2);
+        Button back = (Button)findViewById(R.id.fromNightAlarmGotoActivity_button);
 
         back.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -32,7 +32,7 @@ public class NightAlarmActivity extends AppCompatActivity {
             }
         });
 
-        Button alarm_stop_button = (Button)findViewById(R.id.alarm_stop_button2);
+        Button alarm_stop_button = (Button)findViewById(R.id.night_alarm_stop_button);
 
         alarm_stop_button.setOnClickListener(new View.OnClickListener(){
             @Override

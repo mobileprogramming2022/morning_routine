@@ -6,9 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class MorningAlarmActivity extends AppCompatActivity {
+
+    private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
     MediaPlayer mediaPlayer;
 
     @Override
@@ -21,20 +31,43 @@ public class MorningAlarmActivity extends AppCompatActivity {
         mediaPlayer.start();
 
         getSupportActionBar().setTitle("Alarm Activity");
-        Button back = (Button)findViewById(R.id.back_button);
+        Button activity_inflation_BUTTON = (Button)findViewById(R.id.fromMorningAlarmGotoActivity_button);
 
-        back.setOnClickListener(new View.OnClickListener(){
+        activity_inflation_BUTTON.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //database에서 어떤 화면으로 갈지 불러오기 -> 그 화면으로 가야 함.
-                //(현재는 단순히 MainActivity.class)로 가는 걸로 되어 있음.
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+
+
+                DatabaseReference planRef = database.child("daily").child("12345");
+                planRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        getTodayPlan plan = snapshot.getValue(getTodayPlan.class);
+                        assert plan != null;
+
+                        if (plan.specificType.compareTo("PEDOMETER") == 0) {
+                            Intent intent = new Intent(getApplicationContext(), WalkFlowActivity.class);
+                            startActivity(intent);
+                        } else if (plan.specificType.compareTo("TIMER") == 0) {
+                            Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+                            startActivity(intent);
+                        } else if (plan.specificType.compareTo("TODO") == 0) {
+                            Intent intent = new Intent(getApplicationContext(), TodoActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 finish();
             }
         });
 
-        Button alarm_stop_button = (Button)findViewById(R.id.alarm_stop_button);
+        Button alarm_stop_button = (Button)findViewById(R.id.morning_alarm_stop_button);
 
         alarm_stop_button.setOnClickListener(new View.OnClickListener(){
             @Override
