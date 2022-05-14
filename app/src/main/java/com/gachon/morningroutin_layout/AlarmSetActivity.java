@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.AlarmClock;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +27,10 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
@@ -146,6 +149,7 @@ public class AlarmSetActivity extends AppCompatActivity {
         DB 데이터 포멧
         String TYPE, String USER_INPUT_DATA, String wakeTime, String sleepTime
          */
+        Intent alarmIntent = new Intent(getApplicationContext(), Alarm.class);
         Button SAVE = findViewById(R.id.SaveBtn);
         SAVE.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,9 +175,14 @@ public class AlarmSetActivity extends AppCompatActivity {
                         // DB 에 저장하고
                         addPlanToFB("EXERCISE", "PEDOMETER", USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
 
+                        setMorningAlarm(alarmIntent);
+                        setNightAlarm(alarmIntent);
+
                         // Main activity 띄운다.
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
+
+
 
                     }
                 } else if (SELECTED_SCREEN == TIME_SCREEN) {
@@ -194,6 +203,9 @@ public class AlarmSetActivity extends AppCompatActivity {
                         // DB 에 저장하고
                         addPlanToFB("EXERCISE", "TIMER", USER_INPUT_DATA, wakeTimeDB, sleepTimeDB);
 
+                        setMorningAlarm(alarmIntent);
+                        setNightAlarm(alarmIntent);
+
                         // Main activity 띄운다.
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
@@ -206,6 +218,9 @@ public class AlarmSetActivity extends AppCompatActivity {
 
                     // DB 에 저장하고
                     addPlanToFB("EXERCISE", "TODO", "NO_INPUT_INDICATOR", wakeTimeDB, sleepTimeDB);
+
+                    setMorningAlarm(alarmIntent);
+                    setNightAlarm(alarmIntent);
 
                     // Main activity 띄운다.
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -303,6 +318,100 @@ public class AlarmSetActivity extends AppCompatActivity {
     public void addPlanToFB(String TYPE, String specific_type, String USER_INPUT_DATA, String wakeTime, String sleepTime) {
         getTodayPlan todayPlan = new getTodayPlan(TYPE, specific_type, USER_INPUT_DATA, wakeTime, sleepTime);
         database.child("daily").child("12345").setValue(todayPlan);
+    }
+
+    void setMorningAlarm(Intent alarmIntent){
+        Bundle bundle = new Bundle();
+        bundle.putString("state", "morning");
+        //bundle.putString("what",Integer.toString(Alarm.justSet_morning - 1));
+        alarmIntent.putExtras(bundle);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 20, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
+
+        long now = System.currentTimeMillis();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, mHour_wake);
+        calendar.set(Calendar.MINUTE, mMinute_wake);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        if(calendar.getTimeInMillis() < now){
+            Log.d("알람","현재시간보다 이전 - morning");
+            Date date = new Date(now);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String[] today = sdf.format(date).split("-"); //year,month,day of today
+
+            int year_today = Integer.parseInt(today[0]);
+            int month_today = Integer.parseInt(today[1]);
+            int day_today = Integer.parseInt(today[2]);
+
+            GregorianCalendar nowcalendar= new GregorianCalendar(year_today, month_today, day_today + 1,mHour_wake, mMinute_wake);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nowcalendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, nowcalendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            }
+        }
+        else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            }
+        }
+    }
+
+    void setNightAlarm(Intent alarmIntent){
+        //Intent alarmIntent2 = new Intent(getApplicationContext(), Alarm.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("state", "night");
+        //Log.d("무엇", Integer.toString(Alarm.justSet_night - 1));    // 로그 확인용
+        //bundle.putString("what",Integer.toString(Alarm.justSet_night - 1));
+        alarmIntent.putExtras(bundle);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 30, alarmIntent, PendingIntent.FLAG_MUTABLE);//MUTABLE이라 바꾸면 자동으로 바뀐다.
+
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(Calendar.HOUR_OF_DAY, mHour_sleep);
+        calendar2.set(Calendar.MINUTE, mMinute_sleep);
+        calendar2.set(Calendar.SECOND, 0);
+        calendar2.set(Calendar.MILLISECOND, 0);
+
+        long now = System.currentTimeMillis();
+
+        if(calendar2.getTimeInMillis() < now){
+            Log.d("알람","현재시간보다 이전 - night");
+            Date date = new Date(now);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String[] today = sdf.format(date).split("-"); //year,month,day of today
+
+            int year_today = Integer.parseInt(today[0]);
+            int month_today = Integer.parseInt(today[1]);
+            int day_today = Integer.parseInt(today[2]);
+
+            GregorianCalendar nowcalendar= new GregorianCalendar(year_today, month_today, day_today + 1,mHour_wake, mMinute_wake);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nowcalendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, nowcalendar.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            }
+        }
+        else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+            }
+        }
     }
 
 }
