@@ -4,4 +4,42 @@
     <string name="reward">보상</string>
     <string name="graph">통계</string>
     <string name="option">옵션</string>
+    <string name="roll_back">취소</string>
+    <string name="wake_time">기상 시간</string>
+    <string name="sleep_time">취침 시간</string>
+    <string name="init_wake_time">07:00</string>
+    <string name="init_sleep_time">23:30</string>
+    <string name="three_1">걸음 수</string>
+    <string name="three_2">시간</string>
+    <string name="three_3">실행여부</string>
+    <string name="which_archive">어떤 목표를 세우시겠습니까?</string>
+    <string name="only_show_3">실행 여부만 확인합니다</string>
+    <string name="plz_add_plan">일정을 추가해 주세요</string>
+    <string name="save">저장</string>
+    <string name="empty_bar">|</string>
+    <string name="edit_plan">계획 수정</string>
+    <string name="delete_plan">계획 삭제</string>
+    <string name="move_to_plan">예정된 plan 으로 이동</string>
+    <string name="goto_main">메인으로 이동</string>
+    <string name="alarm_stop">정지</string>
+    <string name="timer_parser">:</string>
+    <string name="start">시작</string>
+    <string name="go_back">돌아가기</string>
+    <string name="cancel">취소하기</string>
+    <string name="fin">완료</string>
+    <string name="daily_walk">하루 걷기</string>
+    <string name="walk_count">걸음수 :</string>
+    <string name="init_0">0</string>
+    <string name="forgive">포기하기</string>
+    <string name="success">성공</string>
+    <string name="walk_progress">진행도: 0%</string>
+
+    <string name="first_instance">첫번째 항목</string>
+    <string name="sec_instance">두번째 항목</string>
+    <string name="third_instance">세번째 항목</string>
+
+    <string name="chohm">조현민</string>
+    <string name="leeyy">이영윤</string>
+    <string name="hz">허제</string>
+    <string name="kimbg">김부경</string>
 </resources>

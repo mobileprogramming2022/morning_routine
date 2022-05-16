@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morningroutin_layout">
         <activity
+            android:name=".DevelopersInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MorningAlarmActivity"
             android:exported="false" />
         <activity
@@ -57,7 +60,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".Alarm"></receiver>
+
+        <receiver android:name=".Alarm" />
     </application>
 
 </manifest>

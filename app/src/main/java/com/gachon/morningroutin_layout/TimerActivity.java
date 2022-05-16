@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -35,6 +38,7 @@ public class TimerActivity extends AppCompatActivity {
     TextView hourTV, minuteTV, secondTV, finishTV;
     Button startBtn;
     int hour, minute, second;
+    boolean isChecked = false;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -55,6 +59,7 @@ public class TimerActivity extends AppCompatActivity {
 
         DatabaseReference planRef = database.child("daily").child("12345");
         planRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 getTodayPlan plan = snapshot.getValue(getTodayPlan.class);
@@ -66,7 +71,15 @@ public class TimerActivity extends AppCompatActivity {
                 // 공부일 경우에는 방해금지 모드를 켭니다.
                 if (plan.getType().compareTo("STUDY") == 0) {
                     // 방해금지 모드 관련 코드
-                    // setRingerMode(TimerActivity.this, AudioManager.RINGER_MODE_SILENT);
+                    /*
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    if (notificationManager.isNotificationPolicyAccessGranted()) {
+                        startActivity(new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS));
+                    }
+                    AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+                    audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+
+                     */
                 }
 
 
@@ -93,146 +106,152 @@ public class TimerActivity extends AppCompatActivity {
                 startBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startBtn.setText("실행 중입니다!");
+                        if (!isChecked) {
+                            startBtn.setText("실행 중입니다!");
 
 
-                        hour = hourET;
-                        minute = minuteET;
-                        second = secondET;
+                            hour = hourET;
+                            minute = minuteET;
+                            second = secondET;
 
-                        Timer timer = new Timer();
-                        TimerTask timerTask = new TimerTask() {
-                            @Override
-                            public void run() {
-                                // 반복실행할 구문
+                            Timer timer = new Timer();
+                            TimerTask timerTask = new TimerTask() {
+                                @Override
+                                public void run() {
+                                    // 반복실행할 구문
 
-                                // 0초 이상이면
-                                if(second != 0) {
-                                    //1초씩 감소
-                                    second--;
+                                    // 0초 이상이면
+                                    if(second != 0) {
+                                        //1초씩 감소
+                                        second--;
 
-                                    // 0분 이상이면
-                                } else if(minute != 0) {
-                                    // 1분 = 60초
-                                    second = 60;
-                                    second--;
-                                    minute--;
+                                        // 0분 이상이면
+                                    } else if(minute != 0) {
+                                        // 1분 = 60초
+                                        second = 60;
+                                        second--;
+                                        minute--;
 
-                                    // 0시간 이상이면
-                                } else if(hour != 0) {
-                                    // 1시간 = 60분
-                                    second = 60;
-                                    minute = 60;
-                                    second--;
-                                    minute--;
-                                    hour--;
-                                }
+                                        // 0시간 이상이면
+                                    } else if(hour != 0) {
+                                        // 1시간 = 60분
+                                        second = 60;
+                                        minute = 60;
+                                        second--;
+                                        minute--;
+                                        hour--;
+                                    }
 
-                                //시, 분, 초가 10이하(한자리수) 라면
-                                // 숫자 앞에 0을 붙인다 ( 8 -> 08 )
-                                if(second <= 9){
-                                    secondTV.setText("0" + second);
-                                } else {
-                                    secondTV.setText(Integer.toString(second));
-                                }
+                                    //시, 분, 초가 10이하(한자리수) 라면
+                                    // 숫자 앞에 0을 붙인다 ( 8 -> 08 )
+                                    if(second <= 9){
+                                        secondTV.setText("0" + second);
+                                    } else {
+                                        secondTV.setText(Integer.toString(second));
+                                    }
 
-                                if(minute <= 9){
-                                    minuteTV.setText("0" + minute);
-                                } else {
-                                    minuteTV.setText(Integer.toString(minute));
-                                }
+                                    if(minute <= 9){
+                                        minuteTV.setText("0" + minute);
+                                    } else {
+                                        minuteTV.setText(Integer.toString(minute));
+                                    }
 
-                                if(hour <= 9){
-                                    hourTV.setText("0" + hour);
-                                } else {
-                                    hourTV.setText(Integer.toString(hour));
-                                }
+                                    if(hour <= 9){
+                                        hourTV.setText("0" + hour);
+                                    } else {
+                                        hourTV.setText(Integer.toString(hour));
+                                    }
 
-                                // 시분초가 다 0이라면 toast를 띄우고 타이머를 종료한다..
-                                if(hour == 0 && minute == 0 && second == 0) {
-                                    timer.cancel();//타이머 종료
-                                    finishTV.setText("목표를 완료했습니다.");
-                                    timeCountLV.setVisibility(View.INVISIBLE);
-
-
-                                    // 선물을 추가하는 코드
-                                    // tree 0-9 까지 있으므로, 0-9 랜덤 난수 발생시킨다.
+                                    // 시분초가 다 0이라면 toast를 띄우고 타이머를 종료한다..
+                                    if(hour == 0 && minute == 0 && second == 0) {
+                                        isChecked = true;
+                                        timer.cancel();//타이머 종료
+                                        finishTV.setText("목표를 완료했습니다.");
+                                        timeCountLV.setVisibility(View.INVISIBLE);
 
 
-                                    double num = Math.random();
-                                    int tree_id = (int)(num * 10);
+                                        // 선물을 추가하는 코드
+                                        // tree 0-9 까지 있으므로, 0-9 랜덤 난수 발생시킨다.
 
 
-                                    // DB 에 업데이트한다.
-                                    DatabaseReference rewardRef = database.child("inventory");
-                                    rewardRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            getInventory inventory = snapshot.getValue(getInventory.class);
-                                            if (tree_id == 1) {
-                                                findViewById(R.id.timer_tree01).setVisibility(View.VISIBLE);
-                                                int remain_tree = inventory.getTree01();
-                                                rewardRef.child("tree01").setValue(remain_tree + 1);
-                                            } else if (tree_id == 2) {
-                                                findViewById(R.id.timer_tree02).setVisibility(View.VISIBLE);
-                                                int remain_tree = inventory.getTree02();
-                                                rewardRef.child("tree02").setValue(remain_tree + 1);
-                                            } else if (tree_id == 3) {
-                                                findViewById(R.id.timer_tree03).setVisibility(View.VISIBLE);
-                                                int remain_tree = inventory.getTree03();
-                                                rewardRef.child("tree03").setValue(remain_tree + 1);
-                                            } else if (tree_id == 4) {
-                                                findViewById(R.id.timer_tree04).setVisibility(View.VISIBLE);
-                                                int remain_tree = inventory.getTree04();
-                                                rewardRef.child("tree04").setValue(remain_tree + 1);
-                                            } else if (tree_id == 5) {
-                                                findViewById(R.id.timer_tree05).setVisibility(View.VISIBLE);
-                                                int remain_tree = inventory.getTree05();
-                                                rewardRef.child("tree05").setValue(remain_tree + 1);
-                                            } else if (tree_id == 6) {
-                                                findViewById(R.id.timer_tree06).setVisibility(View.VISIBLE);
-                                                int remain_tree = inventory.getTree06();
-                                                rewardRef.child("tree06").setValue(remain_tree + 1);
-                                            } else if (tree_id == 7) {
-                                                findViewById(R.id.timer_tree07).setVisibility(View.VISIBLE);
-                                                int remain_tree = inventory.getTree07();
-                                                rewardRef.child("tree07").setValue(remain_tree + 1);
-                                            } else if (tree_id == 8) {
-                                                findViewById(R.id.timer_tree08).setVisibility(View.VISIBLE);
-                                                int remain_tree = inventory.getTree08();
-                                                rewardRef.child("tree08").setValue(remain_tree + 1);
-                                            } else if (tree_id == 9) {
-                                                findViewById(R.id.timer_tree09).setVisibility(View.VISIBLE);
-                                                int remain_tree = inventory.getTree09();
-                                                rewardRef.child("tree09").setValue(remain_tree + 1);
+                                        double num = Math.random();
+                                        int tree_id = (int)(num * 10);
+
+
+                                        // DB 에 업데이트한다.
+                                        DatabaseReference rewardRef = database.child("inventory");
+                                        rewardRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                getInventory inventory = snapshot.getValue(getInventory.class);
+                                                if (tree_id == 1) {
+                                                    findViewById(R.id.timer_tree01).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree01();
+                                                    rewardRef.child("tree01").setValue(remain_tree + 1);
+                                                } else if (tree_id == 2) {
+                                                    findViewById(R.id.timer_tree02).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree02();
+                                                    rewardRef.child("tree02").setValue(remain_tree + 1);
+                                                } else if (tree_id == 3) {
+                                                    findViewById(R.id.timer_tree03).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree03();
+                                                    rewardRef.child("tree03").setValue(remain_tree + 1);
+                                                } else if (tree_id == 4) {
+                                                    findViewById(R.id.timer_tree04).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree04();
+                                                    rewardRef.child("tree04").setValue(remain_tree + 1);
+                                                } else if (tree_id == 5) {
+                                                    findViewById(R.id.timer_tree05).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree05();
+                                                    rewardRef.child("tree05").setValue(remain_tree + 1);
+                                                } else if (tree_id == 6) {
+                                                    findViewById(R.id.timer_tree06).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree06();
+                                                    rewardRef.child("tree06").setValue(remain_tree + 1);
+                                                } else if (tree_id == 7) {
+                                                    findViewById(R.id.timer_tree07).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree07();
+                                                    rewardRef.child("tree07").setValue(remain_tree + 1);
+                                                } else if (tree_id == 8) {
+                                                    findViewById(R.id.timer_tree08).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree08();
+                                                    rewardRef.child("tree08").setValue(remain_tree + 1);
+                                                } else if (tree_id == 9) {
+                                                    findViewById(R.id.timer_tree09).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree09();
+                                                    rewardRef.child("tree09").setValue(remain_tree + 1);
+                                                }
                                             }
-                                        }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                        }
-                                    });
-
+                                            }
+                                        });
 
 
 
 
+
+                                    }
                                 }
-                            }
-                        };
+                            };
 
-                        //타이머를 실행
-                        timer.schedule(timerTask, 0, 1000); //Timer 실행
+                            //타이머를 실행
+                            timer.schedule(timerTask, 0, 1000); //Timer 실행
 
-                        findViewById(R.id.timerCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Toast.makeText(TimerActivity.this, "돌아갑니다.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent);
-                            }
-                        });
+                            findViewById(R.id.timerCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Toast.makeText(TimerActivity.this, "돌아갑니다.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                        // 여기서부터
+
+                        // 여기까지 상단의 if 내부에 있는 코드
                     }
                 });
 
