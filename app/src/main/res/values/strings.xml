@@ -42,4 +42,12 @@
     <string name="leeyy">이영윤</string>
     <string name="hz">허제</string>
     <string name="kimbg">김부경</string>
+
+    <string name="copyright_title">저작권 정보</string>
+    <string name="music_copyright">백색소음 관련 저작 정보\n내용 하나\n내용 둘</string>
+    <string name="alarm_sound_copyright">알람 소리 관련 저작 정보\n내용 하나\n내용 둘</string>
+    <string name="leeyy_todo">201700000\n\n- 보상UI\n- 통계</string>
+    <string name="hz_todo">201700000\n\n- Firebase 연동\n보상 DB\n통계 DB</string>
+    <string name="kbg_todo">202035300\n\n- 알람\n- 옵션UI</string>
+    <string name="chm_todo">202035390\n\n- 일정UI\n- 일정 DB\n- 옵션 UI</string>
 </resources>

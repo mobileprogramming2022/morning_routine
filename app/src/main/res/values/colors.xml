@@ -11,4 +11,5 @@
     <color name="menuLabel">#33FFFFFF</color>
     <color name="alarmSetBackground">#3E3E3E</color>
     <color name="plan_backgroud">#40abd1ff</color>
+    <color name="blue_tint">#40abd1ff</color>
 </resources>
