@@ -56,7 +56,6 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
                 getTodayPlan plan = snapshot.getValue(getTodayPlan.class);
                 if (plan != null) {
                     walk_int = Integer.parseInt(plan.input);
-                    Toast.makeText(WalkFlowActivity.this, "DB 에서 데이터를 가져옵니다", Toast.LENGTH_SHORT).show();
 
                     TextView showArchive = findViewById(R.id.archiveWalk);
                     showArchive.setText("목표 걸음 수: " + plan.input);
@@ -95,7 +94,6 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
         findViewById(R.id.walkCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(WalkFlowActivity.this, "취소합니다", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
@@ -104,7 +102,6 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
         findViewById(R.id.walkSuccess_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(WalkFlowActivity.this, "리워드를 DB 에 추가합니다", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }

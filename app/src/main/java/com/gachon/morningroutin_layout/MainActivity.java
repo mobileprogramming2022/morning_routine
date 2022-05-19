@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 getTodayPlan plan = snapshot.getValue(getTodayPlan.class);
                 if (plan != null) {
-                    Toast.makeText(MainActivity.this, "DB 에서 plan 을 가져왔습니다. ", Toast.LENGTH_SHORT).show();
 
                     findViewById(R.id.processView).setVisibility(View.VISIBLE);
                     findViewById(R.id.imageView).setVisibility(View.GONE);

@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Morningroutin_layout">
         <activity
+            android:name=".StudyTimerActivity"
+            android:exported="false" />
+        <activity
             android:name=".CopyrightActivity"
             android:exported="false" />
         <activity

@@ -49,8 +49,13 @@ public class MorningAlarmActivity extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), WalkFlowActivity.class);
                             startActivity(intent);
                         } else if (plan.specificType.compareTo("TIMER") == 0) {
-                            Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
-                            startActivity(intent);
+                            if (plan.type.compareTo("STUDY") == 0) {
+                                Intent intent = new Intent(getApplicationContext(), StudyTimerActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
+                                startActivity(intent);
+                            }
                         } else if (plan.specificType.compareTo("TODO") == 0) {
                             Intent intent = new Intent(getApplicationContext(), TodoActivity.class);
                             startActivity(intent);

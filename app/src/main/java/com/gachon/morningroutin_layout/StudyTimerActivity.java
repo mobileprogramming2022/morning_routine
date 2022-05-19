@@ -2,7 +2,6 @@ package com.gachon.morningroutin_layout;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,7 +26,7 @@ import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class TimerActivity extends AppCompatActivity {
+public class StudyTimerActivity extends AppCompatActivity {
 
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
@@ -39,14 +39,17 @@ public class TimerActivity extends AppCompatActivity {
     int hour, minute, second;
     boolean isChecked = false;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timer);
+        setContentView(R.layout.activity_study_timer);
 
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_NONE);
 
-        findViewById(R.id.timerCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.StudytimerCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -66,14 +69,14 @@ public class TimerActivity extends AppCompatActivity {
                 StringTokenizer st = new StringTokenizer(timeData, ":");
 
 
-                timeCountLV = (LinearLayout)findViewById(R.id.timeCountLV);
+                timeCountLV = (LinearLayout)findViewById(R.id.StudytimeCountLV);
 
-                hourTV = (TextView)findViewById(R.id.hourTV);
-                minuteTV = (TextView)findViewById(R.id.minuteTV);
-                secondTV = (TextView)findViewById(R.id.secondTV);
-                finishTV = (TextView)findViewById(R.id.finishTV);
+                hourTV = (TextView)findViewById(R.id.StudyhourTV);
+                minuteTV = (TextView)findViewById(R.id.StudyminuteTV);
+                secondTV = (TextView)findViewById(R.id.StudysecondTV);
+                finishTV = (TextView)findViewById(R.id.StudyfinishTV);
 
-                startBtn = (Button)findViewById(R.id.startBtn);
+                startBtn = (Button)findViewById(R.id.StudystartBtn);
 
                 hourET = Integer.parseInt(st.nextToken());
                 minuteET = Integer.parseInt(st.nextToken());
@@ -166,39 +169,39 @@ public class TimerActivity extends AppCompatActivity {
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                 getInventory inventory = snapshot.getValue(getInventory.class);
                                                 if (tree_id == 1) {
-                                                    findViewById(R.id.timer_tree01).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.Studytimer_tree01).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree01();
                                                     rewardRef.child("tree01").setValue(remain_tree + 1);
                                                 } else if (tree_id == 2) {
-                                                    findViewById(R.id.timer_tree02).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.Studytimer_tree02).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree02();
                                                     rewardRef.child("tree02").setValue(remain_tree + 1);
                                                 } else if (tree_id == 3) {
-                                                    findViewById(R.id.timer_tree03).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.Studytimer_tree03).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree03();
                                                     rewardRef.child("tree03").setValue(remain_tree + 1);
                                                 } else if (tree_id == 4) {
-                                                    findViewById(R.id.timer_tree04).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.Studytimer_tree04).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree04();
                                                     rewardRef.child("tree04").setValue(remain_tree + 1);
                                                 } else if (tree_id == 5) {
-                                                    findViewById(R.id.timer_tree05).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.Studytimer_tree05).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree05();
                                                     rewardRef.child("tree05").setValue(remain_tree + 1);
                                                 } else if (tree_id == 6) {
-                                                    findViewById(R.id.timer_tree06).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.Studytimer_tree06).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree06();
                                                     rewardRef.child("tree06").setValue(remain_tree + 1);
                                                 } else if (tree_id == 7) {
-                                                    findViewById(R.id.timer_tree07).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.Studytimer_tree07).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree07();
                                                     rewardRef.child("tree07").setValue(remain_tree + 1);
                                                 } else if (tree_id == 8) {
-                                                    findViewById(R.id.timer_tree08).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.Studytimer_tree08).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree08();
                                                     rewardRef.child("tree08").setValue(remain_tree + 1);
                                                 } else if (tree_id == 9) {
-                                                    findViewById(R.id.timer_tree09).setVisibility(View.VISIBLE);
+                                                    findViewById(R.id.Studytimer_tree09).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree09();
                                                     rewardRef.child("tree09").setValue(remain_tree + 1);
                                                 }
@@ -221,9 +224,11 @@ public class TimerActivity extends AppCompatActivity {
                             //타이머를 실행
                             timer.schedule(timerTask, 0, 1000); //Timer 실행
 
-                            findViewById(R.id.timerCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
+                            findViewById(R.id.StudytimerCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_ALL);
+
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                 }
@@ -242,5 +247,57 @@ public class TimerActivity extends AppCompatActivity {
 
             }
         });
+    }
+    protected void changeInterruptionFiler(int interruptionFilter){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){ // If api level minimum 23
+            /*
+                boolean isNotificationPolicyAccessGranted ()
+                    Checks the ability to read/modify notification policy for the calling package.
+                    Returns true if the calling package can read/modify notification policy.
+                    Request policy access by sending the user to the activity that matches the
+                    system intent action ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS.
+
+                    Use ACTION_NOTIFICATION_POLICY_ACCESS_GRANTED_CHANGED to listen for
+                    user grant or denial of this access.
+
+                Returns
+                    boolean
+
+            */
+            // If notification policy access granted for this package
+            if(mNotificationManager.isNotificationPolicyAccessGranted()){
+                /*
+                    void setInterruptionFilter (int interruptionFilter)
+                        Sets the current notification interruption filter.
+
+                        The interruption filter defines which notifications are allowed to interrupt
+                        the user (e.g. via sound & vibration) and is applied globally.
+
+                        Only available if policy access is granted to this package.
+
+                    Parameters
+                        interruptionFilter : int
+                        Value is INTERRUPTION_FILTER_NONE, INTERRUPTION_FILTER_PRIORITY,
+                        INTERRUPTION_FILTER_ALARMS, INTERRUPTION_FILTER_ALL
+                        or INTERRUPTION_FILTER_UNKNOWN.
+                */
+
+                // Set the interruption filter
+                mNotificationManager.setInterruptionFilter(interruptionFilter);
+            }else {
+                /*
+                    String ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
+                        Activity Action : Show Do Not Disturb access settings.
+                        Users can grant and deny access to Do Not Disturb configuration from here.
+
+                    Input : Nothing.
+                    Output : Nothing.
+                    Constant Value : "android.settings.NOTIFICATION_POLICY_ACCESS_SETTINGS"
+                */
+                // If notification policy access not granted for this package
+                Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                startActivity(intent);
+            }
+        }
     }
 }
