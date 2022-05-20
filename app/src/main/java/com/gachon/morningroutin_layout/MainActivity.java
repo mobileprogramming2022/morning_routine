@@ -79,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
                             database.child("stats").child("day" + i).setValue(2);
                         }
                     }
+                    // update last time visited
+                    database.child("lastTimeVisited").child("month").setValue(month);
+                    database.child("lastTimeVisited").child("year").setValue(year);
                 }
             }
 
