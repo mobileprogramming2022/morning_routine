@@ -14,36 +14,14 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <ImageButton
-            android:background="@android:color/transparent"
-            android:id="@+id/imageView"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:src="@drawable/plus"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.498"
-            android:shadowRadius="15.0"
-            android:shadowDx="7.0"
-            android:shadowDy="7.0"
-            android:shadowColor="#000000"/>
-        <TextView
-            android:id="@+id/textView"
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pm"
-            android:text="일정을 추가해주세요"
-            android:textColor="@color/nonClickButton"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.273" />
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="106dp"
+            android:orientation="horizontal"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
