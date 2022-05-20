@@ -9,21 +9,24 @@
     tools:context=".MainActivity"
     android:background="@drawable/dawn">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginTop="100dp">
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="106dp"
             android:orientation="horizontal"
-            />
+            android:theme="@style/CalenderViewCustom"
+            app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+            app:mcv_firstDayOfWeek="sunday"
+            app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"
+            app:mcv_tileHeight="70dp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

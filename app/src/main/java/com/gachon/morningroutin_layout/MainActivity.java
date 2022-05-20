@@ -20,10 +20,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 
 public class MainActivity extends AppCompatActivity {
+    // get current date information
+    long currentDate = System.currentTimeMillis();
+    Date mDate = new Date(currentDate);
+    SimpleDateFormat date = new SimpleDateFormat("yyyy-MM");
+    String stringDate = date.format(mDate);
+    String array[] = stringDate.split("-");
+    int year = Integer.parseInt(array[0]);
+    int month = Integer.parseInt(array[1]);
 
     // Changes
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -51,6 +61,32 @@ public class MainActivity extends AppCompatActivity {
         TextView txtGraph = findViewById(R.id.textGraph);
         TextView txtOption = findViewById(R.id.textOptions);
         TextView txtReward = findViewById(R.id.textReward);
+
+
+        // if one month or more have passed from lastly visited date, wipe stats database
+        database.child("lastTimeVisited").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                getLastTimeVisited lastTimeVisited = snapshot.getValue(getLastTimeVisited.class);
+                int last_year = lastTimeVisited.getYear();
+                int last_month = lastTimeVisited.getMonth();
+
+                if(year > last_year || month > last_month) {
+                    for (int i = 0; i < 31; i++) {
+                        if (i < 10) {
+                            database.child("stats").child("day0" + i).setValue(2);
+                        } else {
+                            database.child("stats").child("day" + i).setValue(2);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         // 12345 는 개인 폰 별 고유 번호

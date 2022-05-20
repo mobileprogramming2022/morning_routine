@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,6 +40,13 @@ public class StudyTimerActivity extends AppCompatActivity {
     Button startBtn;
     int hour, minute, second;
     boolean isChecked = false;
+
+    // get current date information
+    long currentDate = System.currentTimeMillis();
+    Date mDate = new Date(currentDate);
+    SimpleDateFormat date = new SimpleDateFormat("dd");
+    String stringDate = date.format(mDate);
+    int day = Integer.parseInt(stringDate);
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
@@ -160,6 +169,14 @@ public class StudyTimerActivity extends AppCompatActivity {
 
                                         double num = Math.random();
                                         int tree_id = (int)(num * 10);
+
+                                        // when success, update stats into database
+                                        if(day < 10){
+                                            database.child("stats").child("day0" + day).setValue(1);
+                                        }
+                                        else{
+                                            database.child("stats").child("day" + day).setValue(1);
+                                        }
 
 
                                         // DB 에 업데이트한다.

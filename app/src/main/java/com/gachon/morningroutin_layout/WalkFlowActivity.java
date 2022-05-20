@@ -27,6 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class WalkFlowActivity extends AppCompatActivity implements SensorEventListener {
 
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -34,6 +37,13 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
     SensorManager sensorManager;
     Sensor stepCountSensor;
     TextView stepCountView, progressPercentView;
+
+    // get current date information
+    long currentDate = System.currentTimeMillis();
+    Date mDate = new Date(currentDate);
+    SimpleDateFormat date = new SimpleDateFormat("dd");
+    String stringDate = date.format(mDate);
+    int day = Integer.parseInt(stringDate);
 
     // 현재 걸음 수
     int currentSteps = 0, walk_int;
@@ -94,6 +104,13 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
         findViewById(R.id.walkCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // when fail, update stats into database
+                if(day < 10){
+                    database.child("stats").child("day0" + day).setValue(0);
+                }
+                else{
+                    database.child("stats").child("day" + day).setValue(0);
+                }
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
@@ -102,6 +119,13 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
         findViewById(R.id.walkSuccess_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // when success, update stats into database
+                if(day < 10){
+                    database.child("stats").child("day0" + day).setValue(1);
+                }
+                else{
+                    database.child("stats").child("day" + day).setValue(1);
+                }
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }

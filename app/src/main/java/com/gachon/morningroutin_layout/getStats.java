@@ -40,7 +40,7 @@ public class getStats {
     public int getDay31() { return day31; }
 
     public int[] getStatsArray(){
-        int[] statsArray =  new int[30];
+        int statsArray[] =  new int[31];
 
         statsArray[0] = getDay01();
         statsArray[1] = getDay02();
