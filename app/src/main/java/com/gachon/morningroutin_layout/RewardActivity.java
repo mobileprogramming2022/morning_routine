@@ -231,13 +231,13 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                             }
                         }
                         delete.setImageBitmap(null);
-                        Toast.makeText(RewardActivity.this, "삭제", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RewardActivity.this, "삭제", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(RewardActivity.this, "삭제 안함", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(RewardActivity.this, "삭제 안함", Toast.LENGTH_SHORT).show();
                     }
                 });
         AlertDialog msgDlg = msgBuilder.create();
