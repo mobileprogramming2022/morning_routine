@@ -34,14 +34,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class RewardActivity  extends AppCompatActivity implements View.OnLongClickListener, View.OnDragListener {
+    static final int itemNum=10;
     private static final String TAG = "rewardTag";
     // get instances for firebase database
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseRef = firebaseDatabase.getReference();
     // array for image/textviews for drag-and-drop listener and database link
-    int tree[] = new int [9];
-    TextView inv[] = new TextView[9];
-    ImageView item[] = new ImageView[9];
+    int tree[] = new int [itemNum];
+    TextView inv[] = new TextView[itemNum];
+    ImageView item[] = new ImageView[itemNum];
     ImageView tile[][] = new ImageView[4][5];
     int del_target;
 
@@ -59,12 +60,20 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
         inv[6] = (TextView)findViewById(R.id.inventory07);
         inv[7] = (TextView)findViewById(R.id.inventory08);
         inv[8] = (TextView)findViewById(R.id.inventory09);
+        inv[9] = (TextView)findViewById(R.id.inventory10);
 
         // set image for drag
-        for (int i=0;i<=8; i++) {
-            int k = getResources().getIdentifier("item0" + (i+1),"id", getPackageName());
-            item[i] = (ImageView) findViewById(k);
-            item[i].setTag("ANDROID ICON");
+        for (int i=0;i<itemNum; i++) {
+            if(i<9) {
+                int k = getResources().getIdentifier("item0" + (i+1), "id", getPackageName());
+                item[i] = (ImageView) findViewById(k);
+                item[i].setTag("ANDROID ICON");
+            }
+            else{
+                int k = getResources().getIdentifier("item" + (i+1), "id", getPackageName());
+                item[i] = (ImageView) findViewById(k);
+                item[i].setTag("ANDROID ICON");
+            }
             if (inv[i].getText().equals('0')==false) {
                 item[i].setOnLongClickListener(this);
             }
@@ -96,6 +105,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 getInventory inventory = snapshot.getValue(getInventory.class);
+
                 tree[0] = inventory.getTree01();
                 tree[1] = inventory.getTree02();
                 tree[2] = inventory.getTree03();
@@ -105,11 +115,12 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 tree[6] = inventory.getTree07();
                 tree[7] = inventory.getTree08();
                 tree[8] = inventory.getTree09();
+                tree[9]= inventory.getHouse01();
 
-                for (int i=0; i<9; i++){
+                for (int i=0; i<itemNum; i++){
                     inv[i].setText(String.valueOf(tree[i]));
                 }
-                for (int i=0; i<9; i++) {
+                for (int i=0; i<itemNum; i++) {
                     if (tree[i] == 0) {
                         item[i].setAlpha(50);
                         item[i].setEnabled(false);
@@ -304,7 +315,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 DatabaseReference villageRef = firebaseDatabase.getReference();
                 for(int i = 1; i <= 20; i++){
                     if(setting.getId() == (tileID + i - 1)){
-                        for(int j = 1; j <= 9; j++){
+                        for(int j = 1; j <= itemNum; j++){
                             if(resource.getId() == (itemID + j - 1)){
                                 if(i < 10){
                                     villageRef.child("village").child("tile0" + i).setValue("tree0" + j);
@@ -430,6 +441,19 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                             int tree1 = (int)snapshot.getValue(Integer.class);
                             tree1 -= 1;
                             itemRef.child("inventory").child("tree09").setValue(tree1);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                }
+                else if(resource.getId() == itemID+9){
+                    itemRef.child("inventory").child("house01").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int tree1 = (int)snapshot.getValue(Integer.class);
+                            tree1 -= 1;
+                            itemRef.child("inventory").child("house01").setValue(tree1);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
