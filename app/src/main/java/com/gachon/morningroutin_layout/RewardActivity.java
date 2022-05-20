@@ -43,6 +43,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
     TextView inv[] = new TextView[9];
     ImageView item[] = new ImageView[9];
     ImageView tile[][] = new ImageView[4][5];
+    int del_target;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,11 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 tile[i][j].setOnLongClickListener(new View.OnLongClickListener(){
                     @Override
                     public boolean onLongClick(View view) {
-                        showDialog();
+                        del_target=view.getId();
+                        ImageView temp= findViewById(del_target);
+                        if(temp.getDrawable()!=null){
+                            showDialog();
+                        }
                         return true;
                     }
                 });
@@ -211,6 +216,21 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 .setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        ImageView delete=findViewById(del_target);
+                        DatabaseReference deleteTile = firebaseDatabase.getReference();
+                        for (int k = 0; k<4; k++){
+                            for(int j=0; j<5; j++){
+                                if(del_target==tile[k][j].getId()){
+                                    if(k * 5 + j>9) {
+                                        deleteTile.child("village").child("tile" + (k * 5 + j)).setValue("tree00");
+                                    }
+                                    else{
+                                        deleteTile.child("village").child("tile0" + (k * 5 + j)).setValue("tree00");
+                                    }
+                                }
+                            }
+                        }
+                        delete.setImageBitmap(null);
                         Toast.makeText(RewardActivity.this, "삭제", Toast.LENGTH_SHORT).show();
                     }
                 })
