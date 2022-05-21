@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -27,11 +28,15 @@ public class TodoActivity extends AppCompatActivity {
 
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private NotificationManager mNotificationManager;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
+
+        mediaPlayer = MediaPlayer.create(TodoActivity.this, R.raw.white_noise);
+        mediaPlayer.start();
 
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         CheckBox chk1 = findViewById(R.id.todoActivityChk1);
@@ -82,6 +87,7 @@ public class TodoActivity extends AppCompatActivity {
                     } else {
 
                         if (plan.getType().compareTo("STUDY") == 0) {
+
                             changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_NONE);
                         }
 
@@ -187,6 +193,10 @@ public class TodoActivity extends AppCompatActivity {
                                 @RequiresApi(api = Build.VERSION_CODES.M)
                                 @Override
                                 public void onClick(View view) {
+                                    //노래 끄기
+                                    mediaPlayer.stop();
+                                    mediaPlayer.reset();
+
                                     changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_ALL);
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);

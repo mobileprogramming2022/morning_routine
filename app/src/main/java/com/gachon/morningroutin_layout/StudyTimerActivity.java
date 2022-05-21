@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -33,6 +34,7 @@ public class StudyTimerActivity extends AppCompatActivity {
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     private NotificationManager mNotificationManager;
+    MediaPlayer mediaPlayer;
 
     LinearLayout timeCountLV;
     int hourET, minuteET, secondET;
@@ -54,6 +56,9 @@ public class StudyTimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_timer);
+
+        mediaPlayer = MediaPlayer.create(StudyTimerActivity.this, R.raw.white_noise);
+        mediaPlayer.start();
 
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_NONE);
@@ -244,6 +249,10 @@ public class StudyTimerActivity extends AppCompatActivity {
                             findViewById(R.id.StudytimerCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    //노래 끄기
+                                    mediaPlayer.stop();
+                                    mediaPlayer.reset();
+
                                     changeInterruptionFiler(NotificationManager.INTERRUPTION_FILTER_ALL);
 
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
