@@ -36,7 +36,9 @@ public class MorningAlarmActivity extends AppCompatActivity {
         activity_inflation_BUTTON.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
+                //노래 끄기
+                mediaPlayer.stop();
+                mediaPlayer.reset();
 
                 DatabaseReference planRef = database.child("daily").child("12345");
                 planRef.addListenerForSingleValueEvent(new ValueEventListener() {

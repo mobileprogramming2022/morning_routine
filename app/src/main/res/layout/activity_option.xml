@@ -2,150 +2,306 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:background="@drawable/dawn"
+    android:fadingEdge="horizontal|vertical"
     android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".MainActivity"
-    android:background="@drawable/dawn">
+    tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <ImageButton
-            android:background="@android:color/transparent"
-            android:id="@+id/imageView"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:src="@drawable/plus"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.498"
-            android:shadowRadius="15.0"
-            android:shadowDx="7.0"
-            android:shadowDy="7.0"
-            android:shadowColor="#000000"/>
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/option_text_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="left"
+            android:text="   업데이트"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/option_line2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/option_update_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/option_text_update"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/option_update_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pm"
-            android:text="일정을 추가해주세요"
-            android:textColor="@color/nonClickButton"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="146dp"
+            android:gravity="left"
+            android:text="    업데이트 정보"
+            android:textColor="@color/white"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.273" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/option_update_info_needUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="146dp"
+            android:gravity="left"
+            android:text="업데이트가 필요합니다    "
+            android:textColor="@color/option_gray"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/option_update_info_alreadyNew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="146dp"
+            android:gravity="left"
+            android:text="최신 버전 입니다    "
+            android:textColor="@color/option_gray"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/option_text_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:gravity="left"
+            android:text="   문의사항"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/option_line1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/option_email_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/option_text_email"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/option_email_btn"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_marginTop="246dp"
+            android:background="@drawable/option_button_click"
+            android:gravity="left"
+            android:text="    1 : 1 문의(이메일)"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/option_text_extra_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:gravity="left"
+            android:text="   추가 정보"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/option_line3"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/option_service_explain_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/option_text_extra_info"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/option_service_explain_btn"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_marginTop="346dp"
+            android:background="@drawable/option_button_click"
+            android:gravity="left"
+            android:text="    서비스 안내"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/option_legal_notice_btn"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_marginTop="386dp"
+            android:background="@drawable/option_button_click"
+            android:gravity="left"
+            android:text="    저작권 정보"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/option_developer_info_btn"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_marginTop="426dp"
+            android:background="@drawable/option_button_click"
+            android:gravity="left"
+            android:text="    개발자 정보"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:background="@color/menuLabel"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/menuLabel">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/Plan"
-            android:background="@android:color/transparent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:paddingTop="10dp"
             android:src="@drawable/plan"
-            app:tint="@color/nonClickButton"
-            />
+            app:tint="@color/nonClickButton" />
 
         <ImageButton
             android:id="@+id/Reward"
-            android:background="@android:color/transparent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:paddingTop="10dp"
             android:src="@drawable/medal"
-            app:tint="@color/nonClickButton"/>
+            app:tint="@color/nonClickButton" />
 
         <ImageButton
             android:id="@+id/Graph"
-            android:background="@android:color/transparent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:paddingTop="10dp"
             android:src="@drawable/graph"
-            app:tint="@color/nonClickButton"/>
+            app:tint="@color/nonClickButton" />
 
         <ImageButton
             android:id="@+id/Options"
-            android:background="@android:color/transparent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:paddingTop="10dp"
             android:src="@drawable/options"
-            app:tint="@color/black"/>
+            app:tint="@color/black" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="20dp"
+        android:background="@color/menuLabel"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/menuLabel">
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/textPlan"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:fontFamily="@font/pl"
+            android:gravity="center"
+            android:paddingBottom="5dp"
             android:text="@string/plan"
             android:textColor="@color/nonClickButton"
-            android:paddingBottom="5dp"
-            android:textSize="10dp"/>
+            android:textSize="10dp" />
+
         <TextView
             android:id="@+id/textReward"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:fontFamily="@font/pl"
+            android:gravity="center"
+            android:paddingBottom="5dp"
             android:text="@string/reward"
             android:textColor="@color/nonClickButton"
-            android:paddingBottom="5dp"
-            android:textSize="10dp"/>
+            android:textSize="10dp" />
+
         <TextView
             android:id="@+id/textGraph"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:fontFamily="@font/pl"
+            android:gravity="center"
+            android:paddingBottom="5dp"
             android:text="@string/graph"
             android:textColor="@color/nonClickButton"
-            android:paddingBottom="5dp"
-            android:textSize="10dp"/>
+            android:textSize="10dp" />
+
         <TextView
             android:id="@+id/textOptions"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:fontFamily="@font/pl"
+            android:gravity="center"
+            android:paddingBottom="5dp"
             android:text="@string/option"
             android:textColor="@color/black"
-            android:paddingBottom="5dp"
-            android:textSize="10dp"/>
+            android:textSize="10dp" />
     </LinearLayout>
 </LinearLayout>

@@ -24,7 +24,7 @@
     <string name="alarm_stop">정지</string>
     <string name="timer_parser">:</string>
     <string name="start">시작</string>
-    <string name="go_back">돌아가기</string>
+    <string name="go_back">닫기</string>
     <string name="cancel">취소하기</string>
     <string name="fin">완료</string>
     <string name="daily_walk">하루 걷기</string>
