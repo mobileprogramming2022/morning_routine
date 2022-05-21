@@ -168,7 +168,7 @@ public class StudyTimerActivity extends AppCompatActivity {
 
 
                                         double num = Math.random();
-                                        int tree_id = (int)(num * 10);
+                                        int tree_id = ((int)(num * 9) + 1); // 1.00000009-9.xxxxxxxxx
 
                                         // when success, update stats into database
                                         if(day < 10){

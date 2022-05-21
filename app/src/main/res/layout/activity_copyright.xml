@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="400dp"
         android:layout_height="match_parent"
-        android:background="@color/blue_tint">
+        android:background="@color/blue_tint"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/textView7"

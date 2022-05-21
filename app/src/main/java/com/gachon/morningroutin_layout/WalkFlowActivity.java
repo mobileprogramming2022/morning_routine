@@ -16,8 +16,6 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -169,7 +167,7 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
                     // tree 0-9 까지 있으므로, 0-9 랜덤 난수 발생시킨다.
 
                     double num = Math.random();
-                    int tree_id = (int)(num * 10);
+                    int tree_id = ((int)(num * 9) + 1); // 1.00000009-9.xxxxxxxxx
 
 
                     // DB 에 업데이트한다.

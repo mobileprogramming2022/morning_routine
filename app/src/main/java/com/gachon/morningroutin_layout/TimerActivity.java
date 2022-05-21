@@ -1,8 +1,6 @@
 package com.gachon.morningroutin_layout;
 
 import android.annotation.SuppressLint;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -29,8 +27,6 @@ import java.util.TimerTask;
 public class TimerActivity extends AppCompatActivity {
 
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-
-    private NotificationManager mNotificationManager;
 
     LinearLayout timeCountLV;
     int hourET, minuteET, secondET;
@@ -155,8 +151,9 @@ public class TimerActivity extends AppCompatActivity {
                                         // tree 0-9 까지 있으므로, 0-9 랜덤 난수 발생시킨다.
 
 
-                                        double num = Math.random();
-                                        int tree_id = (int)(num * 10);
+                                        double num = Math.random();   // 0.00000001-0.999999999
+                                        int tree_id = ((int)(num * 9) + 1); // 1.00000009-9.xxxxxxxxx
+
 
 
                                         // DB 에 업데이트한다.
