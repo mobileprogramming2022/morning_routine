@@ -233,7 +233,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                         for (int k = 0; k<4; k++){
                             for(int j=0; j<5; j++){
                                 if(del_target==tile[k][j].getId()){
-                                    if(k * 5 + j>9) {
+                                    if(k * 5 + j>=9) {
                                         deleteTile.child("village").child("tile" + ((k * 5 + j)+1)).setValue("tree00");
                                     }
                                     else{
