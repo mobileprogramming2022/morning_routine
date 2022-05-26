@@ -40,8 +40,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Random;
 
 public class GraphActivity extends AppCompatActivity {
+    // get motivational quote textview
+    TextView motivationalText;
     // create material calendar
     MaterialCalendarView calendarView;
     // get instances for firebase database
@@ -54,10 +57,38 @@ public class GraphActivity extends AppCompatActivity {
     int year = Integer.parseInt(stringDate.substring(0, stringDate.indexOf("-")));
     int month = Integer.parseInt(stringDate.substring(stringDate.indexOf("-") + 1));
 
+    // random integer generator for printing motivational quotes
+    // list of motivational quotes
+    Random rnd = new Random();
+    String quotes[] = {
+            "간단함이 훌륭함의 열쇠다\n-이소룡-",
+            "말만 하고 행동하지 않는 사람은 잡초로 가득 찬 정원과 같다\n-하우얼-",
+            "바람이 불지 않으면 노를 저어라\n-윈스턴 처칠-",
+            "낭비한 시간에 대한 후회는 더 큰 시간 낭비이다\n-메이슨 쿨리-",
+            "산을 움직이려 하는 이는 작은 돌을 들어내는 일로 시작한다\n-공자-",
+            "다리를 움직이지 않고는 작은 도랑도 건널 수 없다\n-알랭-",
+            "휴식은 게으름도, 멈춤도 아니다\n-헨리 포드-",
+            "열정을 잃지 않고 실패에서 실패로 걸어가는 것이 성공이다\n-윈스턴 처칠-",
+            "나는 내가 더 노력할수록 운이 더 좋아진다는 걸 발견했다\n-토마스 제퍼슨-",
+            "미래는 현재 우리가 무엇을 하는가에 달려 있다\n-마하트마 간디-",
+            "미래를 예측하는 최선의 방법은 미래를 창조하는 것이다\n-앨런 케이-",
+            "어제로 돌아갈 수 없다, 왜냐하면 나는 어제와는 다른 사람이 되었기 때문이다\n-루이스 캐럴-",
+            "기운과 끈기는 모든 것을 이겨낸다\n-벤자민 프랭클린-",
+            "꿈은 곧 목표가 되고, 목표를 나누면 계획이 되며, 계획을 실행할때 꿈은 실현되는 것이다\n-그렉.S 리드-",
+            "자기 신뢰는 성공의 첫번째 비결이다\n-랄프 왈도 에머슨-",
+            "인생이란 자신을 찾는 것이 아니라 자신을 만드는 것이다\n-롤리 다스칼-",
+            "성공은 매일 반복한 작은 노력들의 합이다\n-로버트 콜리어-",
+            "동기 부여가 당신을 시작하게 한다. 습관이 당신을 계속 움직이게 한다\n-짐 륜-",
+            "과정에서 재미를 느끼지 못하는데 성공하는 일은 거의 없다\n-데일 카네기-",
+            "만족스럽게 잠자리에 들려면 매일 아침 투지를 가지고 일어나야 한다\n-조지 로리머-",
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+        // get textview
+        motivationalText = findViewById(R.id.motivationalQuotes);
 
         // date arraylist
         ArrayList<CalendarDay> failDates = new ArrayList<>();
@@ -111,6 +142,10 @@ public class GraphActivity extends AppCompatActivity {
 
             }
         });
+
+        // print motivational quotes randomly on quotes textview
+        int randQuote = rnd.nextInt(quotes.length);
+        motivationalText.setText(quotes[randQuote]);
 
 
         // image button

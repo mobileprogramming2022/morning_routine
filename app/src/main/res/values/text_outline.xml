@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- custom attributes list for custom textview -->
+<resources>
+    <declare-styleable name="TextOutline">
+        <attr format="boolean" name="textStroke"/>
+        <attr format="float" name="textStrokeWidth"/>
+        <attr format="color" name="textStrokeColor"/>
+    </declare-styleable>
+</resources>
