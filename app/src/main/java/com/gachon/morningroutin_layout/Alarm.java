@@ -16,7 +16,7 @@ public class Alarm extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // Log.d("알람","justSet_morning" + Integer.toString(justSet_morning));
         // Log.d("알람","justSet_night" + Integer.toString(justSet_night));
-        Toast.makeText(context, "알람~!!", Toast.LENGTH_SHORT).show();    // AVD 확인용
+        //Toast.makeText(context, "알람~!!", Toast.LENGTH_SHORT).show();    // AVD 확인용
         Log.d("알람", "알람입니다.");    // 로그 확인용
         Bundle extras = intent.getExtras();
         if(extras != null){
