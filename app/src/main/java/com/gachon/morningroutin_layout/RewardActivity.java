@@ -34,7 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class RewardActivity  extends AppCompatActivity implements View.OnLongClickListener, View.OnDragListener {
-    static final int itemNum=10;
+    static final int itemNum=15;
     private static final String TAG = "rewardTag";
     // get instances for firebase database
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -62,6 +62,11 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
         inv[7] = (TextView)findViewById(R.id.inventory08);
         inv[8] = (TextView)findViewById(R.id.inventory09);
         inv[9] = (TextView)findViewById(R.id.inventory10);
+        inv[10] = (TextView)findViewById(R.id.inventory11);
+        inv[11] = (TextView)findViewById(R.id.inventory12);
+        inv[12] = (TextView)findViewById(R.id.inventory13);
+        inv[13] = (TextView)findViewById(R.id.inventory14);
+        inv[14] = (TextView)findViewById(R.id.inventory15);
 
         // set image for drag
         for (int i=0;i<itemNum; i++) {
@@ -117,6 +122,11 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 tree[7] = inventory.getTree08();
                 tree[8] = inventory.getTree09();
                 tree[9]= inventory.getTree10();
+                tree[10]= inventory.getTree11();
+                tree[11]= inventory.getTree12();
+                tree[12]= inventory.getTree13();
+                tree[13]= inventory.getTree14();
+                tree[14]= inventory.getTree15();
 
                 for (int i=0; i<itemNum; i++){
                     inv[i].setText(String.valueOf(tree[i]));
@@ -323,10 +333,16 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                         for(int j = 1; j <= itemNum; j++){
                             if(resource.getId() == (itemID[j-1])){
                                 if(i < 10){
-                                    villageRef.child("village").child("tile0" + i).setValue("tree0" + j);
+                                    if(j>9)
+                                        villageRef.child("village").child("tile0" + i).setValue("tree" + j);
+                                    else
+                                        villageRef.child("village").child("tile0" + i).setValue("tree0" + j);
                                 }
                                 else{
-                                    villageRef.child("village").child("tile" + i).setValue("tree" + j);
+                                    if(j>9)
+                                        villageRef.child("village").child("tile" + i).setValue("tree" + j);
+                                    else
+                                        villageRef.child("village").child("tile" + i).setValue("tree0" + j);
                                 }
                             }
                         }

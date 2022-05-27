@@ -1,7 +1,7 @@
 package com.gachon.morningroutin_layout;
 
 public class getInventory {
-    private int tree01, tree02, tree03, tree04, tree05, tree06, tree07, tree08, tree09,tree10;
+    private int tree01, tree02, tree03, tree04, tree05, tree06, tree07, tree08, tree09,tree10,tree11,tree12,tree13,tree14,tree15;
 
     public getInventory(){}
 
@@ -59,4 +59,22 @@ public class getInventory {
     public int getTree10(){
         return tree10;
     }
+    public int getTree11(){
+        return tree11;
+    }
+    public int getTree12(){
+        return tree12;
+    }
+    public int getTree13(){
+        return tree13;
+    }
+    public int getTree14(){
+        return tree14;
+    }
+    public int getTree15(){
+        return tree15;
+    }
+
+
+
 }

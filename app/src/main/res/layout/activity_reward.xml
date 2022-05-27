@@ -181,15 +181,19 @@
 
 
     <!-- ==================================layout for inventory list==========================================-->
-    <TableLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_weight="0.5">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <TableRow
-            android:layout_weight = "1"
-            >
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/item01"
                 android:src="@drawable/tree01"
@@ -230,7 +234,6 @@
                 android:layout_weight="1"
                 android:gravity="center" />
         </TableRow>
-
         <LinearLayout
             android:orientation="horizontal">
             <TextView
@@ -373,8 +376,99 @@
                 android:textColor="@color/white"
                 android:textSize="15sp"/>
         </LinearLayout>
+            <TableRow
+                android:layout_weight = "1"
+                >
+                <ImageView
+                    android:id="@+id/item11"
+                    android:src="@drawable/tree11"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center" />
 
+                <ImageView
+                    android:id="@+id/item12"
+                    android:src="@drawable/tree12"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:id="@+id/item13"
+                    android:src="@drawable/tree13"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:id="@+id/item14"
+                    android:src="@drawable/tree14"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+                <ImageView
+                    android:id="@+id/item15"
+                    android:src="@drawable/tree15"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+            </TableRow>
+
+            <LinearLayout
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/inventory11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/inventory12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/inventory13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/inventory14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/inventory15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+            </LinearLayout>
     </TableLayout>
+</ScrollView>
 
 
 
@@ -390,24 +484,25 @@
 
         <ImageButton
             android:id="@+id/Plan"
-            android:background="@android:color/transparent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:paddingTop="10dp"
             android:src="@drawable/plan"
             app:tint="@color/nonClickButton"
-            />
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageButton
             android:id="@+id/Reward"
-            android:background="@android:color/transparent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:paddingTop="10dp"
             android:src="@drawable/medal"
-            app:tint="@color/black"/>
+            app:tint="@color/black"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <ImageButton
             android:id="@+id/Graph"
@@ -421,13 +516,14 @@
 
         <ImageButton
             android:id="@+id/Options"
-            android:background="@android:color/transparent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:paddingTop="10dp"
             android:src="@drawable/options"
-            app:tint="@color/nonClickButton"/>
+            app:tint="@color/nonClickButton"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
