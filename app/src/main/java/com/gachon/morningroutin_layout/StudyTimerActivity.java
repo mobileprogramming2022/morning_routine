@@ -66,6 +66,14 @@ public class StudyTimerActivity extends AppCompatActivity {
         findViewById(R.id.StudytimerCancel_BUTTON).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // when fail, update stats into database
+                if(day < 10){
+                    database.child("stats").child("day0" + day).setValue(0);
+                }
+                else{
+                    database.child("stats").child("day" + day).setValue(0);
+                }
+
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }

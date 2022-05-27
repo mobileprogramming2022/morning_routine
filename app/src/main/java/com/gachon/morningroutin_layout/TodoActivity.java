@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class TodoActivity extends AppCompatActivity {
@@ -29,6 +31,14 @@ public class TodoActivity extends AppCompatActivity {
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private NotificationManager mNotificationManager;
     MediaPlayer mediaPlayer;
+
+    // get current date information
+    long currentDate = System.currentTimeMillis();
+    Date mDate = new Date(currentDate);
+    SimpleDateFormat date = new SimpleDateFormat("dd");
+    String stringDate = date.format(mDate);
+    int day = Integer.parseInt(stringDate);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +127,14 @@ public class TodoActivity extends AppCompatActivity {
         fail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // when fail, update stats into database
+                if(day < 10){
+                    database.child("stats").child("day0" + day).setValue(0);
+                }
+                else{
+                    database.child("stats").child("day" + day).setValue(0);
+                }
+
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
@@ -129,6 +147,14 @@ public class TodoActivity extends AppCompatActivity {
                     if (chk2.getVisibility() == View.INVISIBLE || chk2.isChecked()) {
                         if (chk3.getVisibility() == View.INVISIBLE || chk3.isChecked()) {
                             Toast.makeText(TodoActivity.this, "모든 작업 완료!", Toast.LENGTH_SHORT).show();
+
+                            // when success, update stats into database
+                            if(day < 10){
+                                database.child("stats").child("day0" + day).setValue(1);
+                            }
+                            else{
+                                database.child("stats").child("day" + day).setValue(1);
+                            }
 
                             // 선물을 추가하는 코드
                             // tree 0-9 까지 있으므로, 0-9 랜덤 난수 발생시킨다.
