@@ -181,7 +181,7 @@ public class StudyTimerActivity extends AppCompatActivity {
 
 
                                         double num = Math.random();
-                                        int tree_id = ((int)(num * 9) + 1); // 1.00000009-9.xxxxxxxxx
+                                        int tree_id = ((int)(num * 15) + 1); // 1.00000009-9.xxxxxxxxx
 
                                         // when success, update stats into database
                                         if(day < 10){
@@ -233,6 +233,30 @@ public class StudyTimerActivity extends AppCompatActivity {
                                                 } else if (tree_id == 9) {
                                                     findViewById(R.id.Studytimer_tree09).setVisibility(View.VISIBLE);
                                                     int remain_tree = inventory.getTree09();
+                                                    rewardRef.child("tree09").setValue(remain_tree + 1);
+                                                }else if (tree_id == 10) {
+                                                    findViewById(R.id.Studytimer_tree10).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree10();
+                                                    rewardRef.child("tree09").setValue(remain_tree + 1);
+                                                }else if (tree_id == 11) {
+                                                    findViewById(R.id.Studytimer_tree11).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree11();
+                                                    rewardRef.child("tree09").setValue(remain_tree + 1);
+                                                }else if (tree_id == 12) {
+                                                    findViewById(R.id.Studytimer_tree12).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree12();
+                                                    rewardRef.child("tree09").setValue(remain_tree + 1);
+                                                }else if (tree_id == 13) {
+                                                    findViewById(R.id.Studytimer_tree13).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree13();
+                                                    rewardRef.child("tree09").setValue(remain_tree + 1);
+                                                }else if (tree_id == 14) {
+                                                    findViewById(R.id.Studytimer_tree14).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree14();
+                                                    rewardRef.child("tree09").setValue(remain_tree + 1);
+                                                }else if (tree_id == 15) {
+                                                    findViewById(R.id.Studytimer_tree15).setVisibility(View.VISIBLE);
+                                                    int remain_tree = inventory.getTree15();
                                                     rewardRef.child("tree09").setValue(remain_tree + 1);
                                                 }
                                             }

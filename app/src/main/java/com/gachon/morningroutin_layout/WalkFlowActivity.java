@@ -167,7 +167,7 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
                     // tree 0-9 까지 있으므로, 0-9 랜덤 난수 발생시킨다.
 
                     double num = Math.random();
-                    int tree_id = ((int)(num * 9) + 1); // 1.00000009-9.xxxxxxxxx
+                    int tree_id = ((int)(num * 15) + 1); // 1.00000009-9.xxxxxxxxx
 
 
                     // DB 에 업데이트한다.
@@ -211,6 +211,30 @@ public class WalkFlowActivity extends AppCompatActivity implements SensorEventLi
                             } else if (tree_id == 9) {
                                 findViewById(R.id.pedometer_tree09).setVisibility(View.VISIBLE);
                                 int remain_tree = inventory.getTree09();
+                                rewardRef.child("tree09").setValue(remain_tree + 1);
+                            }else if (tree_id == 10) {
+                                findViewById(R.id.pedometer_tree10).setVisibility(View.VISIBLE);
+                                int remain_tree = inventory.getTree10();
+                                rewardRef.child("tree09").setValue(remain_tree + 1);
+                            }else if (tree_id == 11) {
+                                findViewById(R.id.pedometer_tree11).setVisibility(View.VISIBLE);
+                                int remain_tree = inventory.getTree11();
+                                rewardRef.child("tree09").setValue(remain_tree + 1);
+                            }else if (tree_id == 12) {
+                                findViewById(R.id.pedometer_tree12).setVisibility(View.VISIBLE);
+                                int remain_tree = inventory.getTree12();
+                                rewardRef.child("tree09").setValue(remain_tree + 1);
+                            }else if (tree_id == 13) {
+                                findViewById(R.id.pedometer_tree13).setVisibility(View.VISIBLE);
+                                int remain_tree = inventory.getTree13();
+                                rewardRef.child("tree09").setValue(remain_tree + 1);
+                            }else if (tree_id == 14) {
+                                findViewById(R.id.pedometer_tree14).setVisibility(View.VISIBLE);
+                                int remain_tree = inventory.getTree14();
+                                rewardRef.child("tree09").setValue(remain_tree + 1);
+                            }else if (tree_id == 15) {
+                                findViewById(R.id.pedometer_tree15).setVisibility(View.VISIBLE);
+                                int remain_tree = inventory.getTree15();
                                 rewardRef.child("tree09").setValue(remain_tree + 1);
                             }
                         }
