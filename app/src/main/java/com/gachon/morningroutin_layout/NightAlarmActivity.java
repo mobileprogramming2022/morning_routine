@@ -20,7 +20,7 @@ public class NightAlarmActivity extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(NightAlarmActivity.this, R.raw.alarm_music_ex2);
         mediaPlayer.start();
 
-        getSupportActionBar().setTitle("Alarm Activity2");
+        //getSupportActionBar().setTitle("Alarm Activity2");
         Button back = (Button)findViewById(R.id.fromNightAlarmGotoActivity_button);
 
         back.setOnClickListener(new View.OnClickListener(){

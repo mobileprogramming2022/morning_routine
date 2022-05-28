@@ -30,7 +30,7 @@ public class MorningAlarmActivity extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(MorningAlarmActivity.this, R.raw.alarm_music_ex);
         mediaPlayer.start();
 
-        getSupportActionBar().setTitle("Alarm Activity");
+        //getSupportActionBar().setTitle("Alarm Activity");
         Button activity_inflation_BUTTON = (Button)findViewById(R.id.fromMorningAlarmGotoActivity_button);
 
         activity_inflation_BUTTON.setOnClickListener(new View.OnClickListener(){
@@ -54,6 +54,7 @@ public class MorningAlarmActivity extends AppCompatActivity {
                             if (plan.type.compareTo("STUDY") == 0) {
                                 Intent intent = new Intent(getApplicationContext(), StudyTimerActivity.class);
                                 startActivity(intent);
+
                             } else {
                                 Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
                                 startActivity(intent);

@@ -34,7 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class RewardActivity  extends AppCompatActivity implements View.OnLongClickListener, View.OnDragListener {
-    static final int itemNum=15;
+    static final int itemNum = 15;
     private static final String TAG = "rewardTag";
     // get instances for firebase database
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -156,11 +156,11 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 String villageList[] = new String[20];
                 getVillage village = snapshot.getValue(getVillage.class);
                 villageList = village.getVillageArray();
-                for(int i = 0; i < 4; i++){
-                    for(int j = 0; j < 5; j++){
-                        if(villageList[i * 5 + j].equals("tree00") == false){
-                            int imageSrc = getResources().getIdentifier(villageList[i * 5 + j], "drawable", getPackageName());
-                            tile[i][j].setImageResource(imageSrc);
+                for(int i = 0; i < 5; i++){
+                    for(int j = 0; j < 4; j++){
+                        if(villageList[j * 5 + i].equals("tree00") == false){
+                            int imageSrc = getResources().getIdentifier(villageList[j * 5 + i], "drawable", getPackageName());
+                            tile[j][i].setImageResource(imageSrc);
                         }
                     }
                 }
@@ -324,7 +324,7 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
 
                 //Toast.makeText(getApplicationContext(), String.valueOf(setting.getId()), Toast.LENGTH_LONG).show();
 
-                // get item/tile ID on create
+                // get tile ID on create
                 int tileID = tile[0][0].getId();
 
                 DatabaseReference villageRef = firebaseDatabase.getReference();

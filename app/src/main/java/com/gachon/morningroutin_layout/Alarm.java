@@ -9,21 +9,26 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.appcompat.app.ActionBar;
+
 public class Alarm extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         // Log.d("알람","justSet_morning" + Integer.toString(justSet_morning));
         // Log.d("알람","justSet_night" + Integer.toString(justSet_night));
         //Toast.makeText(context, "알람~!!", Toast.LENGTH_SHORT).show();    // AVD 확인용
         Log.d("알람", "알람입니다.");    // 로그 확인용
+
+
         Bundle extras = intent.getExtras();
         if(extras != null){
             Log.d("알람", intent.getExtras().getString("state"));    // 로그 확인용
         }
 
         String what_msg = intent.getExtras().getString("what");
-        //Log.d("무엇", what_msg);    // 로그 확인용
+        // Log.d("무엇", what_msg);    // 로그 확인용
         AlarmManager alarmManager= (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if(intent.getExtras().getString("state").equals("morning")) {
             PendingIntent pendingIntent=PendingIntent.getBroadcast(context,20,intent,PendingIntent.FLAG_MUTABLE);
