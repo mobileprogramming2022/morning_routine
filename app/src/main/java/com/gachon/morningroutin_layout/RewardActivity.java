@@ -328,21 +328,34 @@ public class RewardActivity  extends AppCompatActivity implements View.OnLongCli
                 int tileID = tile[0][0].getId();
 
                 DatabaseReference villageRef = firebaseDatabase.getReference();
-                for(int i = 1; i <= 20; i++){
-                    if(setting.getId() == (tileID + i - 1)){
-                        for(int j = 1; j <= itemNum; j++){
-                            if(resource.getId() == (itemID[j-1])){
-                                if(i < 10){
-                                    if(j>9)
-                                        villageRef.child("village").child("tile0" + i).setValue("tree" + j);
-                                    else
-                                        villageRef.child("village").child("tile0" + i).setValue("tree0" + j);
+                for(int i = 1; i <= 20; i++) {
+                    if (i < 6) {
+                        if (setting.getId() == (tileID + i - 1)) {
+                            for (int j = 1; j <= itemNum; j++) {
+                                if (resource.getId() == (itemID[j - 1])) {
+                                        if (j > 9)
+                                            villageRef.child("village").child("tile0" + i).setValue("tree" + j);
+                                        else
+                                            villageRef.child("village").child("tile0" + i).setValue("tree0" + j);
                                 }
-                                else{
-                                    if(j>9)
-                                        villageRef.child("village").child("tile" + i).setValue("tree" + j);
-                                    else
-                                        villageRef.child("village").child("tile" + i).setValue("tree0" + j);
+                            }
+                        }
+                    }
+                    else {
+                        if (setting.getId() == (tileID + i)) {
+                            for (int j = 1; j <= itemNum; j++) {
+                                if (resource.getId() == (itemID[j - 1])) {
+                                    if (i < 10) {
+                                        if (j > 9)
+                                            villageRef.child("village").child("tile0" + i).setValue("tree" + j);
+                                        else
+                                            villageRef.child("village").child("tile0" + i).setValue("tree0" + j);
+                                    } else {
+                                        if (j > 9)
+                                            villageRef.child("village").child("tile" + i).setValue("tree" + j);
+                                        else
+                                            villageRef.child("village").child("tile" + i).setValue("tree0" + j);
+                                    }
                                 }
                             }
                         }
