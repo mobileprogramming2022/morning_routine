@@ -55,7 +55,26 @@
     <string name="developer_info">    개발자 정보</string>
     <string name="music_copyright">백색소음 관련 저작 정보\nThe Closing of Summer(Asher Fulero)</string>
     <string name="alarm_sound_copyright">알람 소리 관련 저작 정보\nmorning alarm : Grut(Patrick Patrikios)\nnight alarm : Your Love(Yung Logos)</string>
-    <string name="code_copyright">코드 관련 저작 정보\n캘린더 관련\n링크 : https://github.com/prolificinteractive/material-calendarview/blob/master/LICENSE</string>
+    <string name="code_copyright">코드 관련 저작 정보\n캘린더 관련\n링크 : https://github.com/prolificinteractive/material-calendarview/blob/master/LICENSE\n\n
+Copyright (c) 2018 Prolific Interactive
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</string>
     <string name="option_service_vision">one day, one routine</string>
     <string name="option_service_extra_info">미라클 모닝을 도와주는 앱입니다\n알람을 설정하고, 아침 과업을 달성해 보세요</string>
     <string name="leeyy_todo">201700000\n\n- 보상UI\n- 통계</string>
