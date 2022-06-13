@@ -107,13 +107,14 @@ Planning | Reward | Statistics | Options |
    
   name | Explanation
   --|--|
-  book_icon.png, check_list.png, foot.png, graph.png, option_button_click.xml, options.png, plan.png, |image for tab image
+  book_icon.png, check_list.png, foot.png, graph.png, option_button_click.xml, options.png, plan.png |image for tab image
   dawm.png, dawnic_lancher_background.xml, dawnmx.png, gradation.xml, ic_launcher_background, |image for total background UI
   plus.png|image for add planning
   fail.png, success.png |image for statistics
   tile01 ~ tile 15 | assets for reward
-  devscreen.png, img.png, |image for option
-  border.xml, line.png | ? 
+  devscreen.png, img.png |image for option
+  border.xml | 
+  line.png | image for intent menu (not used in new version)
     
   * font
 
