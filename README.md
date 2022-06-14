@@ -82,7 +82,7 @@ Planning | Reward | Statistics | Options |
   TodoAcitivity|
   TodoInflationAcitivity|
   **Alarm**|
-  Alarm| broadcastreceiver
+  Alarm| BroadcastReceiver
   MorningAlarmAcitivity|
   NightAlarmAcitivty|
   **Do Acitivty**|
@@ -113,8 +113,8 @@ Planning | Reward | Statistics | Options |
   fail.png, success.png |image for statistics
   tile01 ~ tile 15 | assets for reward
   devscreen.png, img.png |image for option
-  border.xml | 
-  line.png | image for intent menu (not used in new version)
+  border.xml | image for set border line as white color (not used in last version)
+  line.png | image for intent menu (not used in last version)
     
   * font
 
